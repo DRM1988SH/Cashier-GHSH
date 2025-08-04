@@ -668,8 +668,11 @@ function addEntry(event) {
   saveToLocalStorage();
   alert("تمت الإضافة");
   clearEntryForm();
-  goToScreen("dashboard");
+
+  // لا ننتقل إلى شاشة الداشبورد
+  // goToScreen("dashboard");
 }
+
 
 function clearEntryForm() {
   document.getElementById("entryForm").reset();
