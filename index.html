@@ -791,6 +791,42 @@ function printInvoice() {
   invoiceWindow.document.close();
   invoiceWindow.print();
 }
+// حفظ البيانات في localStorage بعد أي تغيير
+function saveToLocalStorage() {
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.setItem('animalCuts', JSON.stringify(animalCuts));
+  localStorage.setItem('entries', JSON.stringify(entries));
+}
+
+// استرجاع البيانات عند تحميل الصفحة
+function loadFromLocalStorage() {
+  const savedUsers = localStorage.getItem('users');
+  const savedCuts = localStorage.getItem('animalCuts');
+  const savedEntries = localStorage.getItem('entries');
+
+  if (savedUsers) users = JSON.parse(savedUsers);
+  if (savedCuts) animalCuts = JSON.parse(savedCuts);
+  if (savedEntries) entries = JSON.parse(savedEntries);
+}
+
+// تنفيذ الاسترجاع عند بدء الصفحة
+loadFromLocalStorage();
+
+// كل مرة يتم فيها إضافة أو حذف أو تعديل، نحفظ التغييرات
+const originalPush = Array.prototype.push;
+Array.prototype.push = function (...args) {
+  const result = originalPush.apply(this, args);
+  saveToLocalStorage();
+  return result;
+};
+
+// مراقبة الحذف في users و animalCuts
+const originalSplice = Array.prototype.splice;
+Array.prototype.splice = function (...args) {
+  const result = originalSplice.apply(this, args);
+  saveToLocalStorage();
+  return result;
+};
 
 </script>
 </body>
