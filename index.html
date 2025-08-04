@@ -380,420 +380,101 @@
     <button class="btn btn-primary mt-3" onclick="printSticker()">طباعة</button>
     <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
-
-  <script src="app.js"></script>
-// بيانات المستخدمين (مخزنة مؤقتاً) 
-let users = [
-  { name: "أحمد", id: "1234", role: "مدخل بيانات" },
-  { name: "مصعب محمد", id: "70062", role: "مشرف" },
-];
-
-// بيانات أنواع الذبائح والتقطيع
-let animalCuts = [
-  { animal: "خروف", cut: "صحن", price: 150 },
-  { animal: "ماعز", cut: "نص", price: 100 },
-];
-
-// بيانات الإدخالات (مبيعات الذبائح)
-let entries = [];
-
-// الحالة الحالية للمستخدم
-let currentUser = null;
-
-// الانتقال بين الشاشات
-function goToScreen(screenId) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(screenId).classList.add("active");
-
-  if (screenId === "entryScreen") {
-    populateEntryDropdowns();
-    clearEntryForm();
-  }
-  if (screenId === "userSettings") {
-    renderUsersTable();
-    renderAnimalCutsTable();
-  }
-  if (screenId === "clientsReportScreen") {
-    renderClientsReportTable();
-  }
-  if (screenId === "invoicesScreen") {
-    renderInvoicesTable();
-  }
-}
-
-// تسجيل الدخول
-function login() {
-  const empID = document.getElementById("empID").value.trim();
-  const user = users.find(u => u.id === empID);
-  if (user) {
-    currentUser = user;
-    goToScreen("dashboard");
-    document.getElementById("loginError").style.display = "none";
-  } else {
-    document.getElementById("loginError").style.display = "block";
-  }
-}
-
-// تسجيل خروج
-function logout() {
-  currentUser = null;
-  goToScreen("welcomeScreen");
-}
-
-// إضافة مستخدم جديد
-function addUser(event) {
-  event.preventDefault();
-  const name = document.getElementById("userName").value.trim();
-  const id = document.getElementById("userID").value.trim();
-  const role = document.getElementById("userRole").value;
-
-  if (users.some(u => u.id === id)) {
-    alert("الرقم الوظيفي موجود مسبقاً");
-    return;
-  }
-
-  users.push({ name, id, role });
-  renderUsersTable();
-
-  document.getElementById("userName").value = "";
-  document.getElementById("userID").value = "";
-  document.getElementById("userRole").value = "";
-}
-
-// عرض جدول المستخدمين
-function renderUsersTable() {
-  const tbody = document.querySelector("#usersTable tbody");
-  tbody.innerHTML = "";
-  users.forEach((u, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${u.name}</td>
-      <td>${u.id}</td>
-      <td>${u.role}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${i})">حذف</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// حذف مستخدم
-function deleteUser(index) {
-  if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
-    users.splice(index, 1);
-    renderUsersTable();
-  }
-}
-
-// إضافة نوع ذبيحة
-function addAnimalCut(event) {
-  event.preventDefault();
-  const animal = document.getElementById("animalType").value.trim();
-  const cut = document.getElementById("cutType").value.trim();
-  const price = Number(document.getElementById("animalPrice").value);
-
-  if (animalCuts.some(ac => ac.animal === animal && ac.cut === cut)) {
-    alert("نوع الذبيحة مع التقطيع موجود مسبقاً");
-    return;
-  }
-
-  animalCuts.push({ animal, cut, price });
-  renderAnimalCutsTable();
-
-  document.getElementById("animalType").value = "";
-  document.getElementById("cutType").value = "";
-  document.getElementById("animalPrice").value = "";
-}
-
-// عرض جدول أنواع الذبائح والتقطيع
-function renderAnimalCutsTable() {
-  const tbody = document.querySelector("#animalCutsTable tbody");
-  tbody.innerHTML = "";
-  animalCuts.forEach((ac, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${ac.animal}</td>
-      <td>${ac.cut}</td>
-      <td>${ac.price}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteAnimalCut(${i})">حذف</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// حذف نوع ذبيحة
-function deleteAnimalCut(index) {
-  if (confirm("هل أنت متأكد من حذف نوع الذبيحة؟")) {
-    animalCuts.splice(index, 1);
-    renderAnimalCutsTable();
-  }
-}
-
-// تعبئة القوائم في شاشة الإدخال
-function populateEntryDropdowns() {
-  const animalTypeEntry = document.getElementById("animalTypeEntry");
-  const cutTypeEntry = document.getElementById("cutTypeEntry");
-  const slaughterID = document.getElementById("slaughterID");
-  const stickerID = document.getElementById("stickerID");
-
-  // نظف الخيارات
-  animalTypeEntry.innerHTML = "";
-  cutTypeEntry.innerHTML = "";
-  slaughterID.innerHTML = "";
-  stickerID.innerHTML = "";
-
-  // حشو أنواع الذبائح الفريدة في القائمة
-  const uniqueAnimals = [...new Set(animalCuts.map(ac => ac.animal))];
-  uniqueAnimals.forEach(animal => {
-    const option = document.createElement("option");
-    option.value = animal;
-    option.textContent = animal;
-    animalTypeEntry.appendChild(option);
-  });
-
-  // حشو أرقام الذبائح (رقم 1 إلى 1000 كمثال)
-  for (let i = 1; i <= 1000; i++) {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = i;
-    slaughterID.appendChild(opt);
-  }
-
-  // حشو أرقام الاستيكر (رقم 1 إلى 1000 كمثال)
-  for (let i = 1; i <= 1000; i++) {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = i;
-    stickerID.appendChild(opt);
-  }
-
-  // عند تغيير نوع الذبيحة، تحديث قائمة التقطيع
-  animalTypeEntry.addEventListener("change", () => {
-    updateCutTypes(animalTypeEntry.value);
-  });
-
-  // التحديث الأولي لقائمة التقطيع
-  if (animalTypeEntry.value) {
-    updateCutTypes(animalTypeEntry.value);
-  }
-}
-
-// تحديث قائمة التقطيع حسب نوع الذبيحة
-function updateCutTypes(animal) {
-  const cutTypeEntry = document.getElementById("cutTypeEntry");
-  cutTypeEntry.innerHTML = "";
-  const cutsForAnimal = animalCuts.filter(ac => ac.animal === animal);
-  cutsForAnimal.forEach(cutObj => {
-    const option = document.createElement("option");
-    option.value = cutObj.cut;
-    option.textContent = cutObj.cut;
-    cutTypeEntry.appendChild(option);
-  });
-
-  // تحديث السعر للوحدة بناء على الاختيار
-  if (cutsForAnimal.length > 0) {
-    document.getElementById("unitPriceEntry").value = cutsForAnimal[0].price;
-    updateTotalPrice();
-  } else {
-    document.getElementById("unitPriceEntry").value = "";
-    document.getElementById("totalPriceEntry").value = "";
-  }
-}
-
-// تحديث السعر الإجمالي عند تغيير الكمية أو السعر للوحدة
-function updateTotalPrice() {
-  const quantity = Number(document.getElementById("quantity").value);
-  const unitPrice = Number(document.getElementById("unitPriceEntry").value);
-  document.getElementById("totalPriceEntry").value = (quantity * unitPrice).toFixed(2);
-}
-
-// تحديث السعر للوحدة عند تغيير نوع التقطيع
-document.getElementById("cutTypeEntry").addEventListener("change", () => {
-  const animal = document.getElementById("animalTypeEntry").value;
-  const cut = document.getElementById("cutTypeEntry").value;
-  const found = animalCuts.find(ac => ac.animal === animal && ac.cut === cut);
-  if (found) {
-    document.getElementById("unitPriceEntry").value = found.price;
-    updateTotalPrice();
-  }
-});
-
-// تحديث السعر الإجمالي عند تغيير الكمية
-document.getElementById("quantity").addEventListener("input", updateTotalPrice);
-
-// إضافة إدخال جديد
-function addEntry(event) {
-  event.preventDefault();
-
-  const entry = {
-    date: document.getElementById("entryDate").value,
-    slaughterhouse: document.getElementById("slaughterhouseName").value || "مسلخ مدينة غياثي",
-    invoiceNumber: document.getElementById("invoiceNumber").value || generateInvoiceNumber(),
-    clientName: document.getElementById("clientName").value.trim(),
-    clientPhone: document.getElementById("clientPhone").value.trim(),
-    slaughterID: document.getElementById("slaughterID").value,
-    stickerID: document.getElementById("stickerID").value,
-    animalType: document.getElementById("animalTypeEntry").value,
-    cutType: document.getElementById("cutTypeEntry").value,
-    quantity: Number(document.getElementById("quantity").value),
-    unitPrice: Number(document.getElementById("unitPriceEntry").value),
-    totalPrice: Number(document.getElementById("totalPriceEntry").value),
-    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
-    addons: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
-  };
-
-  entries.push(entry);
-
-  alert("تم إضافة الإدخال بنجاح!");
-  clearEntryForm();
-  goToScreen("dashboard");
-}
-
-// مسح بيانات نموذج الإدخال
-function clearEntryForm() {
-  document.getElementById("entryForm").reset();
-  document.getElementById("entryDate").valueAsDate = new Date();
-  document.getElementById("slaughterhouseName").value = "";
-  document.getElementById("invoiceNumber").value = generateInvoiceNumber();
-  updateTotalPrice();
-}
-
-// توليد رقم فاتورة متتالي مع بادئة ثابتة GHSH وحفظ الرقم في localStorage
-function generateInvoiceNumber() {
-  let lastNumber = localStorage.getItem('lastInvoiceNumber');
-  if (!lastNumber) {
-    lastNumber = 1000;  // بداية الترقيم (يمكنك تغييره)
-  } else {
-    lastNumber = Number(lastNumber) + 1;
-  }
-  localStorage.setItem('lastInvoiceNumber', lastNumber);
-  return "GHSH" + lastNumber;
-}
-
-// عرض تقرير المتعاملين
-function renderClientsReportTable() {
-  const tbody = document.querySelector("#clientsReportTable tbody");
-  tbody.innerHTML = "";
-  entries.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.clientPhone}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// تصفية تقرير المتعاملين حسب التاريخ
-function filterClientsReport() {
-  const from = document.getElementById("filterDateFrom").value;
-  const to = document.getElementById("filterDateTo").value;
-  const tbody = document.querySelector("#clientsReportTable tbody");
-  tbody.innerHTML = "";
-
-  const filtered = entries.filter(e => {
-    return (!from || e.date >= from) && (!to || e.date <= to);
-  });
-
-  filtered.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.clientPhone}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// عرض جدول الفواتير
-function renderInvoicesTable() {
-  const tbody = document.querySelector("#invoicesTable tbody");
-  tbody.innerHTML = "";
-  entries.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.invoiceNumber}</td>
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// تصفية الفواتير حسب التاريخ
-function filterInvoices() {
-  const filterDate = document.getElementById("invoiceFilterDate").value;
-  const tbody = document.querySelector("#invoicesTable tbody");
-  tbody.innerHTML = "";
-
-  const filtered = entries.filter(e => {
-    return !filterDate || e.date === filterDate;
-  });
-
-  filtered.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.invoiceNumber}</td>
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// طباعة الاستيكر
-function printSticker() {
-  const stickerPreview = document.getElementById("stickerPreview");
-  if (entries.length === 0) {
-    alert("لا توجد بيانات للطباعة");
-    return;
-  }
-  const lastEntry = entries[entries.length - 1];
-  stickerPreview.innerHTML = `
-    <div>نوع الذبيحة: ${lastEntry.animalType}</div>
-    <div>نوع التقطيع: ${lastEntry.cutType}</div>
-    <div>الكمية: ${lastEntry.quantity}</div>
-    <div>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</div>
-    <div>الاستيكر رقم: ${lastEntry.stickerID}</div>
-  `;
-  window.print();
-}
-
-// طباعة الفاتورة
-function printInvoice() {
-  if (entries.length === 0) {
-    alert("لا توجد بيانات للطباعة");
-    return;
-  }
-  const lastEntry = entries[entries.length - 1];
-  const invoiceWindow = window.open("", "Print Invoice", "width=600,height=400");
-  invoiceWindow.document.write(`
-    <html dir="rtl" lang="ar">
-    <head><title>فاتورة</title></head>
-    <body>
-      <h3>فاتورة شراء</h3>
-      <p>رقم الفاتورة: ${lastEntry.invoiceNumber}</p>
-      <p>التاريخ: ${lastEntry.date}</p>
-      <p>اسم المتعامل: ${lastEntry.clientName}</p>
-      <p>عدد الذبائح: ${lastEntry.quantity}</p>
-      <p>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</p>
-    </body>
-    </html>
-  `);
-  invoiceWindow.document.close();
-  invoiceWindow.print();
-}
 <script>
-  
+  let invoiceCounter = 1;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // تعيين تاريخ اليوم تلقائيًا
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("entryDate").value = today;
+
+    // تعبئة أنواع الذبائح
+    const animalTypes = ["خروف", "ماعز", "بقر", "إبل"];
+    const animalTypeSelect = document.getElementById("animalTypeEntry");
+    animalTypes.forEach(type => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
+      animalTypeSelect.appendChild(option);
+    });
+
+    // تعبئة أنواع التقطيع
+    const cutTypes = ["كامل", "نصفين", "أرباع", "مفروم"];
+    const cutTypeSelect = document.getElementById("cutTypeEntry");
+    cutTypes.forEach(cut => {
+      const option = document.createElement("option");
+      option.value = cut;
+      option.textContent = cut;
+      cutTypeSelect.appendChild(option);
+    });
+
+    // تعبئة رقم الفاتورة تلقائيًا
+    generateInvoiceNumber();
+
+    // حساب الإجمالي تلقائيًا
+    document.getElementById("quantity").addEventListener("input", calculateTotal);
+    document.getElementById("unitPriceEntry").addEventListener("input", calculateTotal);
+
+    // سعر ثابت (قابل للتعديل لاحقًا حسب نوع التقطيع)
+    document.getElementById("cutTypeEntry").addEventListener("change", () => {
+      const type = document.getElementById("cutTypeEntry").value;
+      let price = 50;
+      if (type === "نصفين") price = 60;
+      else if (type === "أرباع") price = 70;
+      else if (type === "مفروم") price = 80;
+      document.getElementById("unitPriceEntry").value = price;
+      calculateTotal();
+    });
+  });
+
+  function generateInvoiceNumber() {
+    const invoiceField = document.getElementById("invoiceNumber");
+    invoiceField.value = "INV-" + String(invoiceCounter).padStart(4, "0");
+    invoiceCounter++;
+  }
+
+  function calculateTotal() {
+    const quantity = parseInt(document.getElementById("quantity").value) || 0;
+    const unitPrice = parseFloat(document.getElementById("unitPriceEntry").value) || 0;
+    document.getElementById("totalPriceEntry").value = quantity * unitPrice;
+  }
+
+  function goToScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(screen => {
+      screen.classList.remove("active");
+    });
+    const target = document.getElementById(screenId);
+    if (target) {
+      target.classList.add("active");
+    }
+  }
+
+  function addEntry(event) {
+    event.preventDefault();
+    // طباعة البيانات في الكونسول (يمكن تعديلها لاحقًا لإرسالها إلى سيرفر)
+    const clientName = document.getElementById("clientName").value;
+    const phone = document.getElementById("clientPhone").value;
+    const date = document.getElementById("entryDate").value;
+    const invoice = document.getElementById("invoiceNumber").value;
+    const quantity = document.getElementById("quantity").value;
+    const total = document.getElementById("totalPriceEntry").value;
+
+    console.log(`تمت إضافة الفاتورة:
+      المتعامل: ${clientName}
+      الهاتف: ${phone}
+      التاريخ: ${date}
+      الفاتورة: ${invoice}
+      العدد: ${quantity}
+      الإجمالي: ${total}
+    `);
+
+    alert("تمت الإضافة بنجاح!");
+
+    // إنشاء فاتورة جديدة
+    generateInvoiceNumber();
+    document.getElementById("entryForm").reset();
+    document.getElementById("entryDate").value = new Date().toISOString().split("T")[0];
+  }
 </script>
 </body>
 
