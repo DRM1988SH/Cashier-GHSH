@@ -1,610 +1,798 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>نظام إدارة المسلخ</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
   <style>
-    body { background: #f8f9fa; }
-    .screen { display: none; }
-    .active { display: block !important; }
-    label { font-weight: bold; }
-    .btn-back { margin-top: 15px; }
+    body {
+      background: #f8f9fa;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .active {
+      display: block !important;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .btn-back {
+      margin-top: 15px;
+    }
+
     .sticker {
-      border: 1px solid #000; padding: 10px; width: 350px; background: #fff; margin: 10px auto;
-      font-weight: bold; font-size: 1.1em;
+      border: 1px solid #000;
+      padding: 10px;
+      width: 350px;
+      background: #fff;
+      margin: 10px auto;
+      font-weight: bold;
+      font-size: 1.1em;
       text-align: center;
     }
   </style>
 </head>
+
 <body>
 
-<!-- شاشة الترحيب -->
-<div class="container screen active" id="welcomeScreen">
-  <div class="text-center mt-5">
-    <img src="https://via.placeholder.com/800x300.png?text=مسلخ+مع+لحم+خروف+وطبيب+بيطري" alt="صورة ترحيب" class="img-fluid rounded" />
-    <h3 class="mt-3">مرحبًا بكم في نظام إدارة المسالخ</h3>
-    <button class="btn btn-primary mt-3" onclick="goToScreen('loginScreen')">ابدأ</button>
+  <!-- شاشة الترحيب -->
+  <div class="container screen active" id="welcomeScreen">
+    <div class="text-center mt-5">
+      <img src="https://via.placeholder.com/800x300.png?text=مسلخ+مع+لحم+خروف+وطبيب+بيطري" alt="صورة ترحيب"
+        class="img-fluid rounded" />
+      <h3 class="mt-3">مرحبًا بكم في نظام إدارة المسالخ</h3>
+      <button class="btn btn-primary mt-3" onclick="goToScreen('loginScreen')">ابدأ</button>
+    </div>
   </div>
-</div>
 
-<!-- شاشة تسجيل الدخول -->
-<div class="container screen" id="loginScreen">
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-6">
-      <div class="card p-4">
-        <h4 class="text-center mb-4">تسجيل الدخول</h4>
-        <label for="empID">الرقم الوظيفي</label>
-        <input type="text" id="empID" class="form-control mb-2" placeholder="أدخل الرقم الوظيفي" />
-        <div id="loginError" class="text-danger mb-3" style="display:none;">رقم وظيفي غير صحيح!</div>
-        <div class="text-center">
-          <button class="btn btn-success" onclick="login()">دخول</button>
+  <!-- شاشة تسجيل الدخول -->
+  <div class="container screen" id="loginScreen">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card p-4">
+          <h4 class="text-center mb-4">تسجيل الدخول</h4>
+          <label for="empID">الرقم الوظيفي</label>
+          <input type="text" id="empID" class="form-control mb-2" placeholder="أدخل الرقم الوظيفي" />
+          <div id="loginError" class="text-danger mb-3" style="display:none;">رقم وظيفي غير صحيح!</div>
+          <div class="text-center">
+            <button class="btn btn-success" onclick="login()">دخول</button>
+          </div>
+          <button class="btn btn-outline-dark btn-back w-100 mt-3" onclick="goToScreen('welcomeScreen')">رجوع</button>
         </div>
-        <button class="btn btn-outline-dark btn-back w-100 mt-3" onclick="goToScreen('welcomeScreen')">رجوع</button>
       </div>
     </div>
   </div>
-</div>
 
-<!-- شاشة لوحة التحكم -->
-<div class="container screen" id="dashboard">
-  <h3 class="mt-4 text-center">لوحة التحكم</h3>
-  <div class="row g-3 mt-4">
-    <div class="col-md-4"><button class="btn btn-primary w-100" onclick="goToScreen('userSettings')">إعدادات المستخدم</button></div>
-    <div class="col-md-4"><button class="btn btn-secondary w-100" onclick="goToScreen('entryScreen')">الإدخال</button></div>
-    <div class="col-md-4"><button class="btn btn-dark w-100" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button></div>
-    <div class="col-md-4"><button class="btn btn-warning w-100" onclick="goToScreen('invoicesScreen')">الفواتير</button></div>
-    <div class="col-md-4"><button class="btn btn-success w-100" onclick="goToScreen('statisticsScreen')">التقرير الإحصائي</button></div>
-    <div class="col-md-4"><button class="btn btn-danger w-100" onclick="goToScreen('stickerScreen')">طباعة الاستيكر</button></div>
+  <!-- شاشة لوحة التحكم -->
+  <div class="container screen" id="dashboard">
+    <h3 class="mt-4 text-center">لوحة التحكم</h3>
+    <div class="row g-3 mt-4">
+      <div class="col-md-4">
+        <button class="btn btn-primary w-100" onclick="goToScreen('userSettings')">إعدادات المستخدم</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-secondary w-100" onclick="goToScreen('entryScreen')">الإدخال</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-dark w-100" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-warning w-100" onclick="goToScreen('invoicesScreen')">الفواتير</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-success w-100" onclick="goToScreen('statisticsScreen')">التقرير الإحصائي</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-danger w-100" onclick="goToScreen('stickerScreen')">طباعة الاستيكر</button>
+      </div>
+    </div>
+    <button class="btn btn-outline-dark btn-back mt-4" onclick="logout()">تسجيل خروج</button>
   </div>
-  <button class="btn btn-outline-dark btn-back mt-4" onclick="logout()">تسجيل خروج</button>
-</div>
 
-<!-- شاشة إعدادات المستخدم -->
-<div class="container screen" id="userSettings">
-  <h4 class="mt-4 text-center">إعدادات المستخدم</h4>
-  <form id="userForm" class="row g-3" onsubmit="addUser(event)">
-    <div class="col-md-3">
-      <label for="userName">اسم المستخدم</label>
-      <input type="text" id="userName" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="userID">الرقم الوظيفي</label>
-      <input type="text" id="userID" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="userRole">الصلاحية</label>
-      <select id="userRole" class="form-select" required>
-        <option value="">اختر الصلاحية</option>
-        <option value="مدخل بيانات">مدخل بيانات</option>
-        <option value="مشرف">مشرف</option>
-      </select>
-    </div>
-    <div class="col-md-3 d-flex align-items-end">
-      <button type="submit" class="btn btn-success w-100">إضافة مستخدم</button>
-    </div>
-  </form>
+  <!-- شاشة إعدادات المستخدم -->
+  <div class="container screen" id="userSettings">
+    <h4 class="mt-4 text-center">إعدادات المستخدم</h4>
 
-  <h5 class="mt-4">إعدادات الذبائح وأنواع التقطيع</h5>
-  <form id="animalCutForm" class="row g-3" onsubmit="addAnimalCut(event)">
-    <div class="col-md-4">
-      <label for="animalType">نوع الذبيحة</label>
-      <input list="animalTypesList" id="animalType" class="form-control" placeholder="أدخل نوع الذبيحة" required />
-      <datalist id="animalTypesList">
-        <option value="خروف"></option>
-        <option value="ماعز"></option>
-        <option value="عجل صغير"></option>
-        <option value="بقر"></option>
-        <option value="حوار صغير"></option>
-        <option value="جمل كبير"></option>
-      </datalist>
-    </div>
-    <div class="col-md-4">
-      <label for="cutType">نوع التقطيع</label>
-      <input list="cutTypesList" id="cutType" class="form-control" placeholder="أدخل نوع التقطيع" required />
-      <datalist id="cutTypesList"></datalist>
-    </div>
-    <div class="col-md-2">
-      <label for="animalPrice">سعر الذبيحة</label>
-      <input type="number" id="animalPrice" class="form-control" min="0" required />
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <button type="submit" class="btn btn-info w-100">إضافة نوع ذبيحة</button>
-    </div>
-  </form>
+    <form id="userForm" class="row g-3" onsubmit="addUser(event)">
+      <div class="col-md-3">
+        <label for="userName">اسم المستخدم</label>
+        <input type="text" id="userName" class="form-control" required />
+      </div>
+      <div class="col-md-3">
+        <label for="userID">الرقم الوظيفي</label>
+        <input type="text" id="userID" class="form-control" required />
+      </div>
+      <div class="col-md-3">
+        <label for="userRole">الصلاحية</label>
+        <select id="userRole" class="form-select" required>
+          <option value="">اختر الصلاحية</option>
+          <option value="مدخل بيانات">مدخل بيانات</option>
+          <option value="مشرف">مشرف</option>
+        </select>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-success w-100">إضافة مستخدم</button>
+      </div>
+    </form>
 
-  <table class="table table-bordered mt-4" id="usersTable">
-    <thead>
-      <tr>
-        <th>اسم المستخدم</th>
-        <th>الرقم الوظيفي</th>
-        <th>الصلاحية</th>
-        <th>إجراءات</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h5 class="mt-4">إعدادات الذبائح وأنواع التقطيع</h5>
 
-  <table class="table table-bordered mt-4" id="animalCutsTable">
-    <thead>
-      <tr>
-        <th>نوع الذبيحة</th>
-        <th>نوع التقطيع</th>
-        <th>السعر</th>
-        <th>إجراءات</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <form id="animalCutForm" class="row g-3" onsubmit="addAnimalCut(event)">
+      <div class="col-md-4">
+        <label for="animalType">نوع الذبيحة</label>
+        <input list="animalTypesList" id="animalType" class="form-control" placeholder="أدخل نوع الذبيحة" required />
+        <datalist id="animalTypesList">
+          <option value="خروف"></option>
+          <option value="ماعز"></option>
+          <option value="عجل صغير"></option>
+          <option value="بقر"></option>
+          <option value="حوار صغير"></option>
+          <option value="جمل كبير"></option>
+        </datalist>
+      </div>
+      <div class="col-md-4">
+        <label for="cutType">نوع التقطيع</label>
+        <input list="cutTypesList" id="cutType" class="form-control" placeholder="أدخل نوع التقطيع" required />
+        <datalist id="cutTypesList"></datalist>
+      </div>
+      <div class="col-md-2">
+        <label for="animalPrice">سعر الذبيحة</label>
+        <input type="number" id="animalPrice" class="form-control" min="0" required />
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-info w-100">إضافة نوع ذبيحة</button>
+      </div>
+    </form>
 
-  <button class="btn btn-outline-dark btn-back" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
+    <table class="table table-bordered mt-4" id="usersTable">
+      <thead>
+        <tr>
+          <th>اسم المستخدم</th>
+          <th>الرقم الوظيفي</th>
+          <th>الصلاحية</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-<!-- شاشة الإدخال -->
+    <table class="table table-bordered mt-4" id="animalCutsTable">
+      <thead>
+        <tr>
+          <th>نوع الذبيحة</th>
+          <th>نوع التقطيع</th>
+          <th>السعر</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <<tbody></tbody>
+    </table>
+
+    <button class="btn btn-outline-dark btn-back" onclick="goToScreen('dashboard')">رجوع</button>
+  </div>
+
+  <!-- شاشة الإدخال -->
+  <!-- شاشة الإدخال -->
 <div class="container screen" id="entryScreen">
-  <h4 class="mt-4 text-center">إدخال بيانات الذبائح</h4>
-  <form id="entryForm" class="row g-3" onsubmit="addEntry(event)">
-    <div class="col-md-3">
-      <label for="entryDate">التاريخ</label>
-      <input type="date" id="entryDate" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="slaughterhouseName">اسم المسلخ</label>
-      <input type="text" id="slaughterhouseName" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="invoiceNumber">رقم الفاتورة</label>
-      <input type="text" id="invoiceNumber" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="clientName">اسم المتعامل</label>
-      <input type="text" id="clientName" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="clientPhone">رقم الهاتف</label>
-      <input type="tel" id="clientPhone" class="form-control" required pattern="[0-9]{9,12}" />
-    </div>
-    <div class="col-md-3">
-      <label for="slaughterID">رقم الذبيحة</label>
-      <select id="slaughterID" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="stickerID">رقم الاستيكر</label>
-      <select id="stickerID" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="animalTypeEntry">نوع الذبيحة</label>
-      <select id="animalTypeEntry" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="cutTypeEntry">نوع التقطيع</label>
-      <select id="cutTypeEntry" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="quantity">عدد الذبائح</label>
-      <input type="number" id="quantity" class="form-control" min="1" value="1" required />
-    </div>
-    <div class="col-md-3">
-      <label for="unitPriceEntry">السعر للوحدة</label>
-      <input type="number" id="unitPriceEntry" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="totalPriceEntry">الإجمالي</label>
-      <input type="number" id="totalPriceEntry" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label>طريقة الدفع</label>
-      <div>
-        <input type="radio" id="paymentCash" name="paymentMethod" value="كاش" checked />
-        <label for="paymentCash">كاش</label>
-        <input type="radio" id="paymentCard" name="paymentMethod" value="بطاقة" class="ms-3" />
-        <label for="paymentCard">بطاقة</label>
+  <h4 class="mt-4 text-center fw-bold">مسلخ مدينة غياثي</h4>
+
+  <form id="entryForm" class="mb-4" onsubmit="addEntry(event)">
+    <!-- سطر التاريخ -->
+    <div class="row mb-3 justify-content-start">
+      <div class="col-md-3 text-end">
+        <label for="entryDate" class="form-label"><i class="bi bi-calendar3"></i> التاريخ</label>
+        <input type="date" id="entryDate" class="form-control" required />
       </div>
     </div>
-    <div class="col-md-6">
-      <label>ملحقات</label>
-      <div>
-        <input type="checkbox" id="addon1" value="كرش" />
-        <label for="addon1">كرش</label>
-        <input type="checkbox" id="addon2" value="مصران" class="ms-3" />
-        <label for="addon2">مصران</label>
-        <input type="checkbox" id="addon3" value="كوارع" class="ms-3" />
-        <label for="addon3">كوارع</label>
+
+    <!-- سطر: رقم الهاتف - اسم المتعامل -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="clientPhone" class="form-label"><i class="bi bi-telephone"></i> رقم الهاتف</label>
+        <input type="tel" id="clientPhone" class="form-control" required pattern="[0-9]{9,12}" />
+      </div>
+
+      <div class="col-md-4">
+        <label for="clientName" class="form-label"><i class="bi bi-person"></i> اسم المتعامل</label>
+        <input type="text" id="clientName" class="form-control" required />
       </div>
     </div>
-    <div class="col-md-12 text-center">
+
+    <!-- سطر: رقم الفاتورة - الذبيحة - الاستيكر -->
+    <div class="row mb-4 g-3">
+      <div class="col-md-4">
+        <label for="invoiceNumber" class="form-label"><i class="bi bi-receipt"></i> رقم الفاتورة</label>
+        <input type="text" id="invoiceNumber" class="form-control" readonly />
+      </div>
+      <div class="col-md-4">
+        <label for="slaughterID" class="form-label"><i class="bi bi-hammer"></i> رقم الذبيحة</label>
+        <select id="slaughterID" class="form-select" required></select>
+      </div>
+      <div class="col-md-4">
+        <label for="stickerID" class="form-label"><i class="bi bi-printer"></i> رقم الاستيكر</label>
+        <select id="stickerID" class="form-select" required></select>
+      </div>
+    </div>
+
+    <!-- سطر: النوع - التقطيع - العدد - السعر - الإجمالي -->
+    <div class="row mb-4 g-3">
+      <div class="col-md-3">
+        <label for="animalTypeEntry" class="form-label"><i class="bi bi-paw"></i> نوع الذبيحة</label>
+        <select id="animalTypeEntry" class="form-select" required></select>
+      </div>
+      <div class="col-md-3">
+        <label for="cutTypeEntry" class="form-label"><i class="bi bi-scissors"></i> نوع التقطيع</label>
+        <select id="cutTypeEntry" class="form-select" required></select>
+      </div>
+      <div class="col-md-2">
+        <label for="quantity" class="form-label"><i class="bi bi-calculator"></i> العدد</label>
+        <input type="number" id="quantity" class="form-control" min="1" value="1" required />
+      </div>
+      <div class="col-md-2">
+        <label for="unitPriceEntry" class="form-label"><i class="bi bi-currency-dollar"></i> السعر</label>
+        <input type="number" id="unitPriceEntry" class="form-control" readonly />
+      </div>
+      <div class="col-md-2">
+        <label for="totalPriceEntry" class="form-label"><i class="bi bi-wallet2"></i> الإجمالي</label>
+        <input type="number" id="totalPriceEntry" class="form-control" readonly />
+      </div>
+    </div>
+
+    <!-- سطر: الملحقات - الدفع -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label"><i class="bi bi-box-seam"></i> ملحقات</label>
+        <div>
+          <input type="checkbox" id="addon1" value="كرش" />
+          <label for="addon1" class="me-3">كرش</label>
+          <input type="checkbox" id="addon2" value="مصران" />
+          <label for="addon2" class="me-3">مصران</label>
+          <input type="checkbox" id="addon3" value="كوارع" />
+          <label for="addon3">كوارع</label>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label"><i class="bi bi-credit-card-2-front"></i> طريقة الدفع</label>
+        <div>
+          <input type="radio" id="paymentCash" name="paymentMethod" value="كاش" checked />
+          <label for="paymentCash" class="me-3">كاش</label>
+          <input type="radio" id="paymentCard" name="paymentMethod" value="بطاقة" />
+          <label for="paymentCard">بطاقة</label>
+        </div>
+      </div>
+    </div>
+    <!-- أزرار -->
+    <div class="text-center mt-4">
       <button type="submit" class="btn btn-primary">إضافة وترحيل</button>
       <button type="button" class="btn btn-info ms-2" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button>
       <button type="button" class="btn btn-success ms-2" onclick="printSticker()">طباعة الاستيكر</button>
       <button type="button" class="btn btn-warning ms-2" onclick="printInvoice()">طباعة الفاتورة</button>
     </div>
   </form>
-
   <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
 </div>
 
-<!-- شاشة تقرير المتعاملين -->
-<div class="container screen" id="clientsReportScreen">
-  <h4 class="mt-4 text-center">تقرير المتعاملين</h4>
+<!-- رابط أيقونات Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
-  <div class="row g-3 mb-3">
-    <div class="col-md-4">
-      <label for="filterDateFrom">من تاريخ</label>
-      <input type="date" id="filterDateFrom" class="form-control" />
-    </div>
-    <div class="col-md-4">
-      <label for="filterDateTo">إلى تاريخ</label>
-      <input type="date" id="filterDateTo" class="form-control" />
-    </div>
-    <div class="col-md-4 d-flex align-items-end">
-      <button class="btn btn-primary w-100" onclick="filterClientsReport()">تصفية التقرير</button>
-    </div>
-  </div>
+  <!-- شاشة تقرير المتعاملين -->
+  <div class="container screen" id="clientsReportScreen">
+    <h4 class="mt-4 text-center">تقرير المتعاملين</h4>
 
-  <table class="table table-bordered" id="clientsReportTable">
-    <thead>
-      <tr>
-        <th>تاريخ</th>
-        <th>اسم المتعامل</th>
-        <th>رقم الهاتف</th>
-        <th>عدد الذبائح</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<!-- شاشة الفواتير -->
-<div class="container screen" id="invoicesScreen">
-  <h4 class="mt-4 text-center">الفواتير</h4>
-
-  <div class="mb-3">
-    <label for="invoiceFilterDate">تصفية حسب التاريخ</label>
-    <input type="date" id="invoiceFilterDate" class="form-control" />
-    <button class="btn btn-primary mt-2" onclick="filterInvoices()">تصفية</button>
-  </div>
-
-  <table class="table table-bordered" id="invoicesTable">
-    <thead>
-      <tr>
-        <th>رقم الفاتورة</th>
-        <th>تاريخ</th>
-        <th>اسم المتعامل</th>
-        <th>عدد الذبائح</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<!-- شاشة التقرير الإحصائي -->
-<div class="container screen" id="statisticsScreen">
-  <h4 class="mt-4 text-center">التقرير الإحصائي</h4>
-  <div id="statsContent" class="text-center mt-3">
-    <p>البيانات الإحصائية تظهر هنا...</p>
-  </div>
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<!-- شاشة طباعة الاستيكر -->
-<div class="container screen" id="stickerScreen">
-  <h4 class="mt-4 text-center">طباعة الاستيكر</h4>
-  <div id="stickerPreview" class="sticker"></div>
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<script src="app.js"></script>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>نظام إدارة المسلخ</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-  <style>
-    body { background: #f8f9fa; }
-    .screen { display: none; }
-    .active { display: block !important; }
-    label { font-weight: bold; }
-    .btn-back { margin-top: 15px; }
-    .sticker {
-      border: 1px solid #000; padding: 10px; width: 350px; background: #fff; margin: 10px auto;
-      font-weight: bold; font-size: 1.1em;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-<!-- شاشة الترحيب -->
-<div class="container screen active" id="welcomeScreen">
-  <div class="text-center mt-5">
-    <img src="https://via.placeholder.com/800x300.png?text=مسلخ+مع+لحم+خروف+وطبيب+بيطري" alt="صورة ترحيب" class="img-fluid rounded" />
-    <h3 class="mt-3">مرحبًا بكم في نظام إدارة المسالخ</h3>
-    <button class="btn btn-primary mt-3" onclick="goToScreen('loginScreen')">ابدأ</button>
-  </div>
-</div>
-
-<!-- شاشة تسجيل الدخول -->
-<div class="container screen" id="loginScreen">
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-6">
-      <div class="card p-4">
-        <h4 class="text-center mb-4">تسجيل الدخول</h4>
-        <label for="empID">الرقم الوظيفي</label>
-        <input type="text" id="empID" class="form-control mb-2" placeholder="أدخل الرقم الوظيفي" />
-        <div id="loginError" class="text-danger mb-3" style="display:none;">رقم وظيفي غير صحيح!</div>
-        <div class="text-center">
-          <button class="btn btn-success" onclick="login()">دخول</button>
-        </div>
-        <button class="btn btn-outline-dark btn-back w-100 mt-3" onclick="goToScreen('welcomeScreen')">رجوع</button>
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label for="filterDateFrom">من تاريخ</label>
+        <input type="date" id="filterDateFrom" class="form-control" />
+      </div>
+      <div class="col-md-4">
+        <label for="filterDateTo">إلى تاريخ</label>
+        <input type="date" id="filterDateTo" class="form-control" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-primary w-100" onclick="filterClientsReport()">تصفية التقرير</button>
       </div>
     </div>
+
+    <table class="table table-bordered" id="clientsReportTable">
+      <thead>
+        <tr>
+          <th>تاريخ</th>
+          <th>اسم المتعامل</th>
+          <th>رقم الهاتف</th>
+          <th>عدد الذبائح</th>
+          <th>الإجمالي</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
-</div>
 
-<!-- شاشة لوحة التحكم -->
-<div class="container screen" id="dashboard">
-  <h3 class="mt-4 text-center">لوحة التحكم</h3>
-  <div class="row g-3 mt-4">
-    <div class="col-md-4"><button class="btn btn-primary w-100" onclick="goToScreen('userSettings')">إعدادات المستخدم</button></div>
-    <div class="col-md-4"><button class="btn btn-secondary w-100" onclick="goToScreen('entryScreen')">الإدخال</button></div>
-    <div class="col-md-4"><button class="btn btn-dark w-100" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button></div>
-    <div class="col-md-4"><button class="btn btn-warning w-100" onclick="goToScreen('invoicesScreen')">الفواتير</button></div>
-    <div class="col-md-4"><button class="btn btn-success w-100" onclick="goToScreen('statisticsScreen')">التقرير الإحصائي</button></div>
-    <div class="col-md-4"><button class="btn btn-danger w-100" onclick="goToScreen('stickerScreen')">طباعة الاستيكر</button></div>
-  </div>
-  <button class="btn btn-outline-dark btn-back mt-4" onclick="logout()">تسجيل خروج</button>
-</div>
+  <!-- شاشة الفواتير -->
+  <div class="container screen" id="invoicesScreen">
+    <h4 class="mt-4 text-center">الفواتير</h4>
 
-<!-- شاشة إعدادات المستخدم -->
-<div class="container screen" id="userSettings">
-  <h4 class="mt-4 text-center">إعدادات المستخدم</h4>
-  <form id="userForm" class="row g-3" onsubmit="addUser(event)">
-    <div class="col-md-3">
-      <label for="userName">اسم المستخدم</label>
-      <input type="text" id="userName" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="userID">الرقم الوظيفي</label>
-      <input type="text" id="userID" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="userRole">الصلاحية</label>
-      <select id="userRole" class="form-select" required>
-        <option value="">اختر الصلاحية</option>
-        <option value="مدخل بيانات">مدخل بيانات</option>
-        <option value="مشرف">مشرف</option>
-      </select>
-    </div>
-    <div class="col-md-3 d-flex align-items-end">
-      <button type="submit" class="btn btn-success w-100">إضافة مستخدم</button>
-    </div>
-  </form>
-
-  <h5 class="mt-4">إعدادات الذبائح وأنواع التقطيع</h5>
-  <form id="animalCutForm" class="row g-3" onsubmit="addAnimalCut(event)">
-    <div class="col-md-4">
-      <label for="animalType">نوع الذبيحة</label>
-      <input list="animalTypesList" id="animalType" class="form-control" placeholder="أدخل نوع الذبيحة" required />
-      <datalist id="animalTypesList">
-        <option value="خروف"></option>
-        <option value="ماعز"></option>
-        <option value="عجل صغير"></option>
-        <option value="بقر"></option>
-        <option value="حوار صغير"></option>
-        <option value="جمل كبير"></option>
-      </datalist>
-    </div>
-    <div class="col-md-4">
-      <label for="cutType">نوع التقطيع</label>
-      <input list="cutTypesList" id="cutType" class="form-control" placeholder="أدخل نوع التقطيع" required />
-      <datalist id="cutTypesList"></datalist>
-    </div>
-    <div class="col-md-2">
-      <label for="animalPrice">سعر الذبيحة</label>
-      <input type="number" id="animalPrice" class="form-control" min="0" required />
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <button type="submit" class="btn btn-info w-100">إضافة نوع ذبيحة</button>
-    </div>
-  </form>
-
-  <table class="table table-bordered mt-4" id="usersTable">
-    <thead>
-      <tr>
-        <th>اسم المستخدم</th>
-        <th>الرقم الوظيفي</th>
-        <th>الصلاحية</th>
-        <th>إجراءات</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <table class="table table-bordered mt-4" id="animalCutsTable">
-    <thead>
-      <tr>
-        <th>نوع الذبيحة</th>
-        <th>نوع التقطيع</th>
-        <th>السعر</th>
-        <th>إجراءات</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button class="btn btn-outline-dark btn-back" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<!-- شاشة الإدخال -->
-<div class="container screen" id="entryScreen">
-  <h4 class="mt-4 text-center">إدخال بيانات الذبائح</h4>
-  <form id="entryForm" class="row g-3" onsubmit="addEntry(event)">
-    <div class="col-md-3">
-      <label for="entryDate">التاريخ</label>
-      <input type="date" id="entryDate" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="slaughterhouseName">اسم المسلخ</label>
-      <input type="text" id="slaughterhouseName" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="invoiceNumber">رقم الفاتورة</label>
-      <input type="text" id="invoiceNumber" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="clientName">اسم المتعامل</label>
-      <input type="text" id="clientName" class="form-control" required />
-    </div>
-    <div class="col-md-3">
-      <label for="clientPhone">رقم الهاتف</label>
-      <input type="tel" id="clientPhone" class="form-control" required pattern="[0-9]{9,12}" />
-    </div>
-    <div class="col-md-3">
-      <label for="slaughterID">رقم الذبيحة</label>
-      <select id="slaughterID" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="stickerID">رقم الاستيكر</label>
-      <select id="stickerID" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="animalTypeEntry">نوع الذبيحة</label>
-      <select id="animalTypeEntry" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="cutTypeEntry">نوع التقطيع</label>
-      <select id="cutTypeEntry" class="form-select" required></select>
-    </div>
-    <div class="col-md-3">
-      <label for="quantity">عدد الذبائح</label>
-      <input type="number" id="quantity" class="form-control" min="1" value="1" required />
-    </div>
-    <div class="col-md-3">
-      <label for="unitPriceEntry">السعر للوحدة</label>
-      <input type="number" id="unitPriceEntry" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label for="totalPriceEntry">الإجمالي</label>
-      <input type="number" id="totalPriceEntry" class="form-control" readonly />
-    </div>
-    <div class="col-md-3">
-      <label>طريقة الدفع</label>
-      <div>
-        <input type="radio" id="paymentCash" name="paymentMethod" value="كاش" checked />
-        <label for="paymentCash">كاش</label>
-        <input type="radio" id="paymentCard" name="paymentMethod" value="بطاقة" class="ms-3" />
-        <label for="paymentCard">بطاقة</label>
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label for="invoiceDateFrom">من تاريخ</label>
+        <input type="date" id="invoiceDateFrom" class="form-control" />
+      </div>
+      <div class="col-md-4">
+        <label for="invoiceDateTo">إلى تاريخ</label>
+        <input type="date" id="invoiceDateTo" class="form-control" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-primary w-100" onclick="filterInvoices()">تصفية الفواتير</button>
       </div>
     </div>
-    <div class="col-md-6">
-      <label>ملحقات</label>
-      <div>
-        <input type="checkbox" id="addon1" value="كرش" />
-        <label for="addon1">كرش</label>
-        <input type="checkbox" id="addon2" value="مصران" class="ms-3" />
-        <label for="addon2">مصران</label>
-        <input type="checkbox" id="addon3" value="كوارع" class="ms-3" />
-        <label for="addon3">كوارع</label>
+
+    <table class="table table-bordered" id="invoicesTable">
+      <thead>
+        <tr>
+          <th>رقم الفاتورة</th>
+          <th>التاريخ</th>
+          <th>اسم المتعامل</th>
+          <th>الإجمالي</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
+  </div>
+
+  <!-- شاشة التقرير الإحصائي -->
+  <div class="container screen" id="statisticsScreen">
+    <h4 class="mt-4 text-center">التقرير الإحصائي</h4>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label for="statsDateFrom">من تاريخ</label>
+        <input type="date" id="statsDateFrom" class="form-control" />
+      </div>
+      <div class="col-md-4">
+        <label for="statsDateTo">إلى تاريخ</label>
+        <input type="date" id="statsDateTo" class="form-control" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-primary w-100" onclick="filterStatistics()">تصفية التقرير</button>
       </div>
     </div>
-    <div class="col-md-12 text-center">
-      <button type="submit" class="btn btn-primary">إضافة وترحيل</button>
-      <button type="button" class="btn btn-info ms-2" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button>
-      <button type="button" class="btn btn-success ms-2" onclick="printSticker()">طباعة الاستيكر</button>
-      <button type="button" class="btn btn-warning ms-2" onclick="printInvoice()">طباعة الفاتورة</button>
-    </div>
-  </form>
 
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
+    <div id="statsResult" class="mt-4"></div>
 
-<!-- شاشة تقرير المتعاملين -->
-<div class="container screen" id="clientsReportScreen">
-  <h4 class="mt-4 text-center">تقرير المتعاملين</h4>
-
-  <div class="row g-3 mb-3">
-    <div class="col-md-4">
-      <label for="filterDateFrom">من تاريخ</label>
-      <input type="date" id="filterDateFrom" class="form-control" />
-    </div>
-    <div class="col-md-4">
-      <label for="filterDateTo">إلى تاريخ</label>
-      <input type="date" id="filterDateTo" class="form-control" />
-    </div>
-    <div class="col-md-4 d-flex align-items-end">
-      <button class="btn btn-primary w-100" onclick="filterClientsReport()">تصفية التقرير</button>
-    </div>
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
 
-  <table class="table table-bordered" id="clientsReportTable">
-    <thead>
-      <tr>
-        <th>تاريخ</th>
-        <th>اسم المتعامل</th>
-        <th>رقم الهاتف</th>
-        <th>عدد الذبائح</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
-
-<!-- شاشة الفواتير -->
-<div class="container screen" id="invoicesScreen">
-  <h4 class="mt-4 text-center">الفواتير</h4>
-
-  <div class="mb-3">
-    <label for="invoiceFilterDate">تصفية حسب التاريخ</label>
-    <input type="date" id="invoiceFilterDate" class="form-control" />
-    <button class="btn btn-primary mt-2" onclick="filterInvoices()">تصفية</button>
+  <!-- شاشة طباعة الاستيكر -->
+  <div class="container screen" id="stickerScreen">
+    <h4 class="mt-4 text-center">طباعة الاستيكر</h4>
+    <div id="stickerPrintArea" class="sticker"></div>
+    <button class="btn btn-primary mt-3" onclick="printSticker()">طباعة</button>
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
 
-  <table class="table table-bordered" id="invoicesTable">
-    <thead>
-      <tr>
-        <th>رقم الفاتورة</th>
-        <th>تاريخ</th>
-        <th>اسم المتعامل</th>
-        <th>عدد الذبائح</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <script src="app.js"></script>
+// بيانات المستخدمين (مخزنة مؤقتاً) 
+let users = [
+  { name: "أحمد", id: "1234", role: "مدخل بيانات" },
+  { name: "مصعب محمد", id: "70062", role: "مشرف" },
+];
 
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
+// بيانات أنواع الذبائح والتقطيع
+let animalCuts = [
+  { animal: "خروف", cut: "صحن", price: 150 },
+  { animal: "ماعز", cut: "نص", price: 100 },
+];
 
-<!-- شاشة التقرير الإحصائي -->
-<div class="container screen" id="statisticsScreen">
-  <h4 class="mt-4 text-center">التقرير الإحصائي</h4>
-  <div id="statsContent" class="text-center mt-3">
-    <p>البيانات الإحصائية تظهر هنا...</p>
-  </div>
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
+// بيانات الإدخالات (مبيعات الذبائح)
+let entries = [];
 
-<!-- شاشة طباعة الاستيكر -->
-<div class="container screen" id="stickerScreen">
-  <h4 class="mt-4 text-center">طباعة الاستيكر</h4>
-  <div id="stickerPreview" class="sticker"></div>
-  <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
-</div>
+// الحالة الحالية للمستخدم
+let currentUser = null;
 
-<script src="app.js"></script>
+// الانتقال بين الشاشات
+function goToScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(screenId).classList.add("active");
+
+  if (screenId === "entryScreen") {
+    populateEntryDropdowns();
+    clearEntryForm();
+  }
+  if (screenId === "userSettings") {
+    renderUsersTable();
+    renderAnimalCutsTable();
+  }
+  if (screenId === "clientsReportScreen") {
+    renderClientsReportTable();
+  }
+  if (screenId === "invoicesScreen") {
+    renderInvoicesTable();
+  }
+}
+
+// تسجيل الدخول
+function login() {
+  const empID = document.getElementById("empID").value.trim();
+  const user = users.find(u => u.id === empID);
+  if (user) {
+    currentUser = user;
+    goToScreen("dashboard");
+    document.getElementById("loginError").style.display = "none";
+  } else {
+    document.getElementById("loginError").style.display = "block";
+  }
+}
+
+// تسجيل خروج
+function logout() {
+  currentUser = null;
+  goToScreen("welcomeScreen");
+}
+
+// إضافة مستخدم جديد
+function addUser(event) {
+  event.preventDefault();
+  const name = document.getElementById("userName").value.trim();
+  const id = document.getElementById("userID").value.trim();
+  const role = document.getElementById("userRole").value;
+
+  if (users.some(u => u.id === id)) {
+    alert("الرقم الوظيفي موجود مسبقاً");
+    return;
+  }
+
+  users.push({ name, id, role });
+  renderUsersTable();
+
+  document.getElementById("userName").value = "";
+  document.getElementById("userID").value = "";
+  document.getElementById("userRole").value = "";
+}
+
+// عرض جدول المستخدمين
+function renderUsersTable() {
+  const tbody = document.querySelector("#usersTable tbody");
+  tbody.innerHTML = "";
+  users.forEach((u, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.name}</td>
+      <td>${u.id}</td>
+      <td>${u.role}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${i})">حذف</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// حذف مستخدم
+function deleteUser(index) {
+  if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
+    users.splice(index, 1);
+    renderUsersTable();
+  }
+}
+
+// إضافة نوع ذبيحة
+function addAnimalCut(event) {
+  event.preventDefault();
+  const animal = document.getElementById("animalType").value.trim();
+  const cut = document.getElementById("cutType").value.trim();
+  const price = Number(document.getElementById("animalPrice").value);
+
+  if (animalCuts.some(ac => ac.animal === animal && ac.cut === cut)) {
+    alert("نوع الذبيحة مع التقطيع موجود مسبقاً");
+    return;
+  }
+
+  animalCuts.push({ animal, cut, price });
+  renderAnimalCutsTable();
+
+  document.getElementById("animalType").value = "";
+  document.getElementById("cutType").value = "";
+  document.getElementById("animalPrice").value = "";
+}
+
+// عرض جدول أنواع الذبائح والتقطيع
+function renderAnimalCutsTable() {
+  const tbody = document.querySelector("#animalCutsTable tbody");
+  tbody.innerHTML = "";
+  animalCuts.forEach((ac, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${ac.animal}</td>
+      <td>${ac.cut}</td>
+      <td>${ac.price}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteAnimalCut(${i})">حذف</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// حذف نوع ذبيحة
+function deleteAnimalCut(index) {
+  if (confirm("هل أنت متأكد من حذف نوع الذبيحة؟")) {
+    animalCuts.splice(index, 1);
+    renderAnimalCutsTable();
+  }
+}
+
+// تعبئة القوائم في شاشة الإدخال
+function populateEntryDropdowns() {
+  const animalTypeEntry = document.getElementById("animalTypeEntry");
+  const cutTypeEntry = document.getElementById("cutTypeEntry");
+  const slaughterID = document.getElementById("slaughterID");
+  const stickerID = document.getElementById("stickerID");
+
+  // نظف الخيارات
+  animalTypeEntry.innerHTML = "";
+  cutTypeEntry.innerHTML = "";
+  slaughterID.innerHTML = "";
+  stickerID.innerHTML = "";
+
+  // حشو أنواع الذبائح الفريدة في القائمة
+  const uniqueAnimals = [...new Set(animalCuts.map(ac => ac.animal))];
+  uniqueAnimals.forEach(animal => {
+    const option = document.createElement("option");
+    option.value = animal;
+    option.textContent = animal;
+    animalTypeEntry.appendChild(option);
+  });
+
+  // حشو أرقام الذبائح (رقم 1 إلى 1000 كمثال)
+  for (let i = 1; i <= 1000; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    slaughterID.appendChild(opt);
+  }
+
+  // حشو أرقام الاستيكر (رقم 1 إلى 1000 كمثال)
+  for (let i = 1; i <= 1000; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    stickerID.appendChild(opt);
+  }
+
+  // عند تغيير نوع الذبيحة، تحديث قائمة التقطيع
+  animalTypeEntry.addEventListener("change", () => {
+    updateCutTypes(animalTypeEntry.value);
+  });
+
+  // التحديث الأولي لقائمة التقطيع
+  if (animalTypeEntry.value) {
+    updateCutTypes(animalTypeEntry.value);
+  }
+}
+
+// تحديث قائمة التقطيع حسب نوع الذبيحة
+function updateCutTypes(animal) {
+  const cutTypeEntry = document.getElementById("cutTypeEntry");
+  cutTypeEntry.innerHTML = "";
+  const cutsForAnimal = animalCuts.filter(ac => ac.animal === animal);
+  cutsForAnimal.forEach(cutObj => {
+    const option = document.createElement("option");
+    option.value = cutObj.cut;
+    option.textContent = cutObj.cut;
+    cutTypeEntry.appendChild(option);
+  });
+
+  // تحديث السعر للوحدة بناء على الاختيار
+  if (cutsForAnimal.length > 0) {
+    document.getElementById("unitPriceEntry").value = cutsForAnimal[0].price;
+    updateTotalPrice();
+  } else {
+    document.getElementById("unitPriceEntry").value = "";
+    document.getElementById("totalPriceEntry").value = "";
+  }
+}
+
+// تحديث السعر الإجمالي عند تغيير الكمية أو السعر للوحدة
+function updateTotalPrice() {
+  const quantity = Number(document.getElementById("quantity").value);
+  const unitPrice = Number(document.getElementById("unitPriceEntry").value);
+  document.getElementById("totalPriceEntry").value = (quantity * unitPrice).toFixed(2);
+}
+
+// تحديث السعر للوحدة عند تغيير نوع التقطيع
+document.getElementById("cutTypeEntry").addEventListener("change", () => {
+  const animal = document.getElementById("animalTypeEntry").value;
+  const cut = document.getElementById("cutTypeEntry").value;
+  const found = animalCuts.find(ac => ac.animal === animal && ac.cut === cut);
+  if (found) {
+    document.getElementById("unitPriceEntry").value = found.price;
+    updateTotalPrice();
+  }
+});
+
+// تحديث السعر الإجمالي عند تغيير الكمية
+document.getElementById("quantity").addEventListener("input", updateTotalPrice);
+
+// إضافة إدخال جديد
+function addEntry(event) {
+  event.preventDefault();
+
+  const entry = {
+    date: document.getElementById("entryDate").value,
+    slaughterhouse: document.getElementById("slaughterhouseName").value || "مسلخ مدينة غياثي",
+    invoiceNumber: document.getElementById("invoiceNumber").value || generateInvoiceNumber(),
+    clientName: document.getElementById("clientName").value.trim(),
+    clientPhone: document.getElementById("clientPhone").value.trim(),
+    slaughterID: document.getElementById("slaughterID").value,
+    stickerID: document.getElementById("stickerID").value,
+    animalType: document.getElementById("animalTypeEntry").value,
+    cutType: document.getElementById("cutTypeEntry").value,
+    quantity: Number(document.getElementById("quantity").value),
+    unitPrice: Number(document.getElementById("unitPriceEntry").value),
+    totalPrice: Number(document.getElementById("totalPriceEntry").value),
+    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+    addons: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
+  };
+
+  entries.push(entry);
+
+  alert("تم إضافة الإدخال بنجاح!");
+  clearEntryForm();
+  goToScreen("dashboard");
+}
+
+// مسح بيانات نموذج الإدخال
+function clearEntryForm() {
+  document.getElementById("entryForm").reset();
+  document.getElementById("entryDate").valueAsDate = new Date();
+  document.getElementById("slaughterhouseName").value = "";
+  document.getElementById("invoiceNumber").value = generateInvoiceNumber();
+  updateTotalPrice();
+}
+
+// توليد رقم فاتورة متتالي مع بادئة ثابتة GHSH وحفظ الرقم في localStorage
+function generateInvoiceNumber() {
+  let lastNumber = localStorage.getItem('lastInvoiceNumber');
+  if (!lastNumber) {
+    lastNumber = 1000;  // بداية الترقيم (يمكنك تغييره)
+  } else {
+    lastNumber = Number(lastNumber) + 1;
+  }
+  localStorage.setItem('lastInvoiceNumber', lastNumber);
+  return "GHSH" + lastNumber;
+}
+
+// عرض تقرير المتعاملين
+function renderClientsReportTable() {
+  const tbody = document.querySelector("#clientsReportTable tbody");
+  tbody.innerHTML = "";
+  entries.forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.date}</td>
+      <td>${e.clientName}</td>
+      <td>${e.clientPhone}</td>
+      <td>${e.quantity}</td>
+      <td>${e.totalPrice.toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// تصفية تقرير المتعاملين حسب التاريخ
+function filterClientsReport() {
+  const from = document.getElementById("filterDateFrom").value;
+  const to = document.getElementById("filterDateTo").value;
+  const tbody = document.querySelector("#clientsReportTable tbody");
+  tbody.innerHTML = "";
+
+  const filtered = entries.filter(e => {
+    return (!from || e.date >= from) && (!to || e.date <= to);
+  });
+
+  filtered.forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.date}</td>
+      <td>${e.clientName}</td>
+      <td>${e.clientPhone}</td>
+      <td>${e.quantity}</td>
+      <td>${e.totalPrice.toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// عرض جدول الفواتير
+function renderInvoicesTable() {
+  const tbody = document.querySelector("#invoicesTable tbody");
+  tbody.innerHTML = "";
+  entries.forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.invoiceNumber}</td>
+      <td>${e.date}</td>
+      <td>${e.clientName}</td>
+      <td>${e.quantity}</td>
+      <td>${e.totalPrice.toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// تصفية الفواتير حسب التاريخ
+function filterInvoices() {
+  const filterDate = document.getElementById("invoiceFilterDate").value;
+  const tbody = document.querySelector("#invoicesTable tbody");
+  tbody.innerHTML = "";
+
+  const filtered = entries.filter(e => {
+    return !filterDate || e.date === filterDate;
+  });
+
+  filtered.forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.invoiceNumber}</td>
+      <td>${e.date}</td>
+      <td>${e.clientName}</td>
+      <td>${e.quantity}</td>
+      <td>${e.totalPrice.toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// طباعة الاستيكر
+function printSticker() {
+  const stickerPreview = document.getElementById("stickerPreview");
+  if (entries.length === 0) {
+    alert("لا توجد بيانات للطباعة");
+    return;
+  }
+  const lastEntry = entries[entries.length - 1];
+  stickerPreview.innerHTML = `
+    <div>نوع الذبيحة: ${lastEntry.animalType}</div>
+    <div>نوع التقطيع: ${lastEntry.cutType}</div>
+    <div>الكمية: ${lastEntry.quantity}</div>
+    <div>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</div>
+    <div>الاستيكر رقم: ${lastEntry.stickerID}</div>
+  `;
+  window.print();
+}
+
+// طباعة الفاتورة
+function printInvoice() {
+  if (entries.length === 0) {
+    alert("لا توجد بيانات للطباعة");
+    return;
+  }
+  const lastEntry = entries[entries.length - 1];
+  const invoiceWindow = window.open("", "Print Invoice", "width=600,height=400");
+  invoiceWindow.document.write(`
+    <html dir="rtl" lang="ar">
+    <head><title>فاتورة</title></head>
+    <body>
+      <h3>فاتورة شراء</h3>
+      <p>رقم الفاتورة: ${lastEntry.invoiceNumber}</p>
+      <p>التاريخ: ${lastEntry.date}</p>
+      <p>اسم المتعامل: ${lastEntry.clientName}</p>
+      <p>عدد الذبائح: ${lastEntry.quantity}</p>
+      <p>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</p>
+    </body>
+    </html>
+  `);
+  invoiceWindow.document.close();
+  invoiceWindow.print();
+}
 
 </body>
-</html>
 
+</html>
