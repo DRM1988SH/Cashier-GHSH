@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نظام إدارة المسلخ</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
     body {
       background: #f8f9fa;
+      font-family: 'Tahoma', sans-serif;
     }
-
     .screen {
       display: none;
     }
-
     .active {
       display: block !important;
     }
-
     label {
       font-weight: bold;
     }
-
     .btn-back {
       margin-top: 15px;
     }
-
     .sticker {
       border: 1px solid #000;
       padding: 10px;
@@ -37,16 +33,81 @@
       font-size: 1.1em;
       text-align: center;
     }
+    .card-preview {
+      width: 9.701in;
+      height: 1.907in;
+      border: 3px solid black;
+      box-sizing: border-box;
+      padding: 0.1in 10px 0.5in 10px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 20px auto;
+    }
+    .card-header {
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 1px;
+    }
+    .card-content {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: stretch;
+      flex: 1;
+    }
+    .big-number {
+      font-size: 90px;
+      font-weight: bold;
+      min-width: 90px;
+      border: 5px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+    }
+    .info-container {
+      flex: 1;
+      display: flex;
+      justify-content: space-around;
+      gap: 15px;
+    }
+    .info-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      font-size: 16px;
+      gap: 9px;
+    }
+    .info-title, .info-value {
+      border: 4px solid black;
+      padding: 5px;
+      text-align: center;
+    }
+    .info-title {
+      background: #f0f0f0;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: white;
+      }
+    }
   </style>
 </head>
-
 <body>
 
   <!-- شاشة الترحيب -->
   <div class="container screen active" id="welcomeScreen">
     <div class="text-center mt-5">
-      <img src="https://via.placeholder.com/800x300.png?text=مسلخ+مع+لحم+خروف+وطبيب+بيطري" alt="صورة ترحيب"
-        class="img-fluid rounded" />
+      <img src="https://via.placeholder.com/800x300.png?text=مسلخ+مع+لحم+خروف+وطبيب+بيطري" alt="صورة ترحيب" class="img-fluid rounded">
       <h3 class="mt-3">مرحبًا بكم في نظام إدارة المسالخ</h3>
       <button class="btn btn-primary mt-3" onclick="goToScreen('loginScreen')">ابدأ</button>
     </div>
@@ -59,7 +120,7 @@
         <div class="card p-4">
           <h4 class="text-center mb-4">تسجيل الدخول</h4>
           <label for="empID">الرقم الوظيفي</label>
-          <input type="text" id="empID" class="form-control mb-2" placeholder="أدخل الرقم الوظيفي" />
+          <input type="text" id="empID" class="form-control mb-2" placeholder="أدخل الرقم الوظيفي">
           <div id="loginError" class="text-danger mb-3" style="display:none;">رقم وظيفي غير صحيح!</div>
           <div class="text-center">
             <button class="btn btn-success" onclick="login()">دخول</button>
@@ -100,14 +161,14 @@
   <div class="container screen" id="userSettings">
     <h4 class="mt-4 text-center">إعدادات المستخدم</h4>
 
-    <form id="userForm" class="row g-3" onsubmit="addUser(event)">
+    <form id="userForm" class="row g-3" onsubmit="event.preventDefault(); addUser();">
       <div class="col-md-3">
         <label for="userName">اسم المستخدم</label>
-        <input type="text" id="userName" class="form-control" required />
+        <input type="text" id="userName" class="form-control" required>
       </div>
       <div class="col-md-3">
         <label for="userID">الرقم الوظيفي</label>
-        <input type="text" id="userID" class="form-control" required />
+        <input type="text" id="userID" class="form-control" required>
       </div>
       <div class="col-md-3">
         <label for="userRole">الصلاحية</label>
@@ -124,27 +185,27 @@
 
     <h5 class="mt-4">إعدادات الذبائح وأنواع التقطيع</h5>
 
-    <form id="animalCutForm" class="row g-3" onsubmit="addAnimalCut(event)">
+    <form id="animalCutForm" class="row g-3" onsubmit="event.preventDefault(); addAnimalCut();">
       <div class="col-md-4">
         <label for="animalType">نوع الذبيحة</label>
-        <input list="animalTypesList" id="animalType" class="form-control" placeholder="أدخل نوع الذبيحة" required />
+        <input list="animalTypesList" id="animalType" class="form-control" placeholder="أدخل نوع الذبيحة" required>
         <datalist id="animalTypesList">
-          <option value="خروف"></option>
-          <option value="ماعز"></option>
-          <option value="عجل صغير"></option>
-          <option value="بقر"></option>
-          <option value="حوار صغير"></option>
-          <option value="جمل كبير"></option>
+          <option value="خروف">خروف</option>
+          <option value="ماعز">ماعز</option>
+          <option value="عجل صغير">عجل صغير</option>
+          <option value="بقر">بقر</option>
+          <option value="حوار صغير">حوار صغير</option>
+          <option value="جمل كبير">جمل كبير</option>
         </datalist>
       </div>
       <div class="col-md-4">
         <label for="cutType">نوع التقطيع</label>
-        <input list="cutTypesList" id="cutType" class="form-control" placeholder="أدخل نوع التقطيع" required />
+        <input list="cutTypesList" id="cutType" class="form-control" placeholder="أدخل نوع التقطيع" required>
         <datalist id="cutTypesList"></datalist>
       </div>
       <div class="col-md-2">
         <label for="animalPrice">سعر الذبيحة</label>
-        <input type="number" id="animalPrice" class="form-control" min="0" required />
+        <input type="number" id="animalPrice" class="form-control" min="0" required>
       </div>
       <div class="col-md-2 d-flex align-items-end">
         <button type="submit" class="btn btn-info w-100">إضافة نوع ذبيحة</button>
@@ -172,116 +233,112 @@
           <th>إجراءات</th>
         </tr>
       </thead>
-      <<tbody></tbody>
+      <tbody></tbody>
     </table>
 
     <button class="btn btn-outline-dark btn-back" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
 
   <!-- شاشة الإدخال -->
-  <!-- شاشة الإدخال -->
-<div class="container screen" id="entryScreen">
-  <h4 class="mt-4 text-center fw-bold">مسلخ مدينة غياثي</h4>
+  <div class="container screen" id="entryScreen">
+    <h4 class="mt-4 text-center fw-bold">مسلخ مدينة غياثي</h4>
 
-  <form id="entryForm" class="mb-4" onsubmit="addEntry(event)">
-    <!-- سطر التاريخ -->
-    <div class="row mb-3 justify-content-start">
-      <div class="col-md-3 text-end">
-        <label for="entryDate" class="form-label"><i class="bi bi-calendar3"></i> التاريخ</label>
-        <input type="date" id="entryDate" class="form-control" required />
-      </div>
-    </div>
-
-    <!-- سطر: رقم الهاتف - اسم المتعامل -->
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <label for="clientPhone" class="form-label"><i class="bi bi-telephone"></i> رقم الهاتف</label>
-        <input type="tel" id="clientPhone" class="form-control" required pattern="[0-9]{9,12}" />
-      </div>
-
-      <div class="col-md-4">
-        <label for="clientName" class="form-label"><i class="bi bi-person"></i> اسم المتعامل</label>
-        <input type="text" id="clientName" class="form-control" required />
-      </div>
-    </div>
-
-    <!-- سطر: رقم الفاتورة - الذبيحة - الاستيكر -->
-    <div class="row mb-4 g-3">
-      <div class="col-md-4">
-        <label for="invoiceNumber" class="form-label"><i class="bi bi-receipt"></i> رقم الفاتورة</label>
-        <input type="text" id="invoiceNumber" class="form-control" readonly />
-      </div>
-      <div class="col-md-4">
-        <label for="slaughterID" class="form-label"><i class="bi bi-hammer"></i> رقم الذبيحة</label>
-        <select id="slaughterID" class="form-select" required></select>
-      </div>
-      <div class="col-md-4">
-        <label for="stickerID" class="form-label"><i class="bi bi-printer"></i> رقم الاستيكر</label>
-        <select id="stickerID" class="form-select" required></select>
-      </div>
-    </div>
-
-    <!-- سطر: النوع - التقطيع - العدد - السعر - الإجمالي -->
-    <div class="row mb-4 g-3">
-      <div class="col-md-3">
-        <label for="animalTypeEntry" class="form-label"><i class="bi bi-paw"></i> نوع الذبيحة</label>
-        <select id="animalTypeEntry" class="form-select" required></select>
-      </div>
-      <div class="col-md-3">
-        <label for="cutTypeEntry" class="form-label"><i class="bi bi-scissors"></i> نوع التقطيع</label>
-        <select id="cutTypeEntry" class="form-select" required></select>
-      </div>
-      <div class="col-md-2">
-        <label for="quantity" class="form-label"><i class="bi bi-calculator"></i> العدد</label>
-        <input type="number" id="quantity" class="form-control" min="1" value="1" required />
-      </div>
-      <div class="col-md-2">
-        <label for="unitPriceEntry" class="form-label"><i class="bi bi-currency-dollar"></i> السعر</label>
-        <input type="number" id="unitPriceEntry" class="form-control" readonly />
-      </div>
-      <div class="col-md-2">
-        <label for="totalPriceEntry" class="form-label"><i class="bi bi-wallet2"></i> الإجمالي</label>
-        <input type="number" id="totalPriceEntry" class="form-control" readonly />
-      </div>
-    </div>
-
-    <!-- سطر: الملحقات - الدفع -->
-    <div class="row g-3 mb-4">
-      <div class="col-md-6">
-        <label class="form-label"><i class="bi bi-box-seam"></i> ملحقات</label>
-        <div>
-          <input type="checkbox" id="addon1" value="كرش" />
-          <label for="addon1" class="me-3">كرش</label>
-          <input type="checkbox" id="addon2" value="مصران" />
-          <label for="addon2" class="me-3">مصران</label>
-          <input type="checkbox" id="addon3" value="كوارع" />
-          <label for="addon3">كوارع</label>
+    <form id="entryForm" class="mb-4" onsubmit="event.preventDefault(); addEntry();">
+      <!-- سطر التاريخ -->
+      <div class="row mb-3 justify-content-start">
+        <div class="col-md-3 text-end">
+          <label for="entryDate" class="form-label"><i class="bi bi-calendar3"></i> التاريخ</label>
+          <input type="date" id="entryDate" class="form-control" required>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <label class="form-label"><i class="bi bi-credit-card-2-front"></i> طريقة الدفع</label>
-        <div>
-          <input type="radio" id="paymentCash" name="paymentMethod" value="كاش" checked />
-          <label for="paymentCash" class="me-3">كاش</label>
-          <input type="radio" id="paymentCard" name="paymentMethod" value="بطاقة" />
-          <label for="paymentCard">بطاقة</label>
+      <!-- سطر: رقم الهاتف - اسم المتعامل -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="clientPhone" class="form-label"><i class="bi bi-telephone"></i> رقم الهاتف</label>
+          <input type="tel" id="clientPhone" class="form-control" required pattern="[0-9]{9,12}">
+        </div>
+
+        <div class="col-md-4">
+          <label for="clientName" class="form-label"><i class="bi bi-person"></i> اسم المتعامل</label>
+          <input type="text" id="clientName" class="form-control" required>
         </div>
       </div>
-    </div>
-    <!-- أزرار -->
-    <div class="text-center mt-4">
-      <button type="submit" class="btn btn-primary">إضافة وترحيل</button>
-      <button type="button" class="btn btn-info ms-2" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button>
-      <button type="button" class="btn btn-success ms-2" onclick="printSticker()">طباعة الاستيكر</button>
-      <button type="button" class="btn btn-warning ms-2" onclick="printInvoice()">طباعة الفاتورة</button>
-    </div>
-  </form>
-  <button class="btn btn-outline-dark btn-back mt-3" onclick=>رجوع</button>
-</div>
 
-<!-- رابط أيقونات Bootstrap -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+      <!-- سطر: رقم الفاتورة - الذبيحة - الاستيكر -->
+      <div class="row mb-4 g-3">
+        <div class="col-md-4">
+          <label for="invoiceNumber" class="form-label"><i class="bi bi-receipt"></i> رقم الفاتورة</label>
+          <input type="text" id="invoiceNumber" class="form-control" readonly>
+        </div>
+        <div class="col-md-4">
+          <label for="slaughterID" class="form-label"><i class="bi bi-hammer"></i> رقم الذبيحة</label>
+          <select id="slaughterID" class="form-select" required></select>
+        </div>
+        <div class="col-md-4">
+          <label for="stickerID" class="form-label"><i class="bi bi-printer"></i> رقم الاستيكر</label>
+          <select id="stickerID" class="form-select" required></select>
+        </div>
+      </div>
+
+      <!-- سطر: النوع - التقطيع - العدد - السعر - الإجمالي -->
+      <div class="row mb-4 g-3">
+        <div class="col-md-3">
+          <label for="animalTypeEntry" class="form-label"><i class="bi bi-paw"></i> نوع الذبيحة</label>
+          <select id="animalTypeEntry" class="form-select" required></select>
+        </div>
+        <div class="col-md-3">
+          <label for="cutTypeEntry" class="form-label"><i class="bi bi-scissors"></i> نوع التقطيع</label>
+          <select id="cutTypeEntry" class="form-select" required></select>
+        </div>
+        <div class="col-md-2">
+          <label for="quantity" class="form-label"><i class="bi bi-calculator"></i> العدد</label>
+          <input type="number" id="quantity" class="form-control" min="1" value="1" required>
+        </div>
+        <div class="col-md-2">
+          <label for="unitPriceEntry" class="form-label"><i class="bi bi-currency-dollar"></i> السعر</label>
+          <input type="number" id="unitPriceEntry" class="form-control" readonly>
+        </div>
+        <div class="col-md-2">
+          <label for="totalPriceEntry" class="form-label"><i class="bi bi-wallet2"></i> الإجمالي</label>
+          <input type="number" id="totalPriceEntry" class="form-control" readonly>
+        </div>
+      </div>
+
+      <!-- سطر: الملحقات - الدفع -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label class="form-label"><i class="bi bi-box-seam"></i> ملحقات</label>
+          <div>
+            <input type="checkbox" id="addon1" value="كرش">
+            <label for="addon1" class="me-3">كرش</label>
+            <input type="checkbox" id="addon2" value="مصران">
+            <label for="addon2" class="me-3">مصران</label>
+            <input type="checkbox" id="addon3" value="كوارع">
+            <label for="addon3">كوارع</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label"><i class="bi bi-credit-card-2-front"></i> طريقة الدفع</label>
+          <div>
+            <input type="radio" id="paymentCash" name="paymentMethod" value="كاش" checked>
+            <label for="paymentCash" class="me-3">كاش</label>
+            <input type="radio" id="paymentCard" name="paymentMethod" value="بطاقة">
+            <label for="paymentCard">بطاقة</label>
+          </div>
+        </div>
+      </div>
+      <!-- أزرار -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">إضافة وترحيل</button>
+        <button type="button" class="btn btn-info ms-2" onclick="goToScreen('clientsReportScreen')">تقرير المتعاملين</button>
+        <button type="button" class="btn btn-success ms-2" onclick="printSticker()">طباعة الاستيكر</button>
+        <button type="button" class="btn btn-warning ms-2" onclick="printInvoice()">طباعة الفاتورة</button>
+      </div>
+    </form>
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
+  </div>
 
   <!-- شاشة تقرير المتعاملين -->
   <div class="container screen" id="clientsReportScreen">
@@ -290,11 +347,11 @@
     <div class="row g-3 mb-3">
       <div class="col-md-4">
         <label for="filterDateFrom">من تاريخ</label>
-        <input type="date" id="filterDateFrom" class="form-control" />
+        <input type="date" id="filterDateFrom" class="form-control">
       </div>
       <div class="col-md-4">
         <label for="filterDateTo">إلى تاريخ</label>
-        <input type="date" id="filterDateTo" class="form-control" />
+        <input type="date" id="filterDateTo" class="form-control">
       </div>
       <div class="col-md-4 d-flex align-items-end">
         <button class="btn btn-primary w-100" onclick="filterClientsReport()">تصفية التقرير</button>
@@ -324,11 +381,11 @@
     <div class="row g-3 mb-3">
       <div class="col-md-4">
         <label for="invoiceDateFrom">من تاريخ</label>
-        <input type="date" id="invoiceDateFrom" class="form-control" />
+        <input type="date" id="invoiceDateFrom" class="form-control">
       </div>
       <div class="col-md-4">
         <label for="invoiceDateTo">إلى تاريخ</label>
-        <input type="date" id="invoiceDateTo" class="form-control" />
+        <input type="date" id="invoiceDateTo" class="form-control">
       </div>
       <div class="col-md-4 d-flex align-items-end">
         <button class="btn btn-primary w-100" onclick="filterInvoices()">تصفية الفواتير</button>
@@ -347,6 +404,7 @@
       <tbody></tbody>
     </table>
 
+    <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
 
   <!-- شاشة التقرير الإحصائي -->
@@ -356,11 +414,11 @@
     <div class="row g-3 mb-3">
       <div class="col-md-4">
         <label for="statsDateFrom">من تاريخ</label>
-        <input type="date" id="statsDateFrom" class="form-control" />
+        <input type="date" id="statsDateFrom" class="form-control">
       </div>
       <div class="col-md-4">
         <label for="statsDateTo">إلى تاريخ</label>
-        <input type="date" id="statsDateTo" class="form-control" />
+        <input type="date" id="statsDateTo" class="form-control">
       </div>
       <div class="col-md-4 d-flex align-items-end">
         <button class="btn btn-primary w-100" onclick="filterStatistics()">تصفية التقرير</button>
@@ -379,384 +437,640 @@
     <button class="btn btn-primary mt-3" onclick="printSticker()">طباعة</button>
     <button class="btn btn-outline-dark btn-back mt-3" onclick="goToScreen('dashboard')">رجوع</button>
   </div>
-<script>
-// ✅ تعريف بيانات المستخدمين
-let users = [
-  { name: "أحمد", id: "1234", role: "مدخل بيانات" },
-  { name: "مصعب محمد", id: "70062", role: "مشرف" },
-];
 
-// ✅ أنواع الذبائح والتقطيع
-let animalCuts = [
-  { animal: "خروف", cut: "صحن", price: 150 },
-  { animal: "ماعز", cut: "نص", price: 100 },
-];
+  <!-- شاشة إدخال بيانات البطاقة -->
+  <div class="container screen" id="cardScreen">
+    <h2>شاشة إدخال بيانات البطاقة</h2>
+    <form id="dataForm" class="no-print">
+      <label>نوع الذبيحة:</label>
+      <select id="animalTypeCard" class="form-control">
+        <option value="خروف">خروف</option>
+        <option value="بقر">بقر</option>
+        <option value="ماعز">ماعز</option>
+      </select>
 
-// ✅ الإدخالات المحفوظة
-let entries = [];
-let currentUser = null;
+      <label>نوع التقطيع:</label>
+      <input type="text" id="cutTypeCard" class="form-control" placeholder="مثال: عظيمة">
 
-// ✅ تحميل البيانات من localStorage عند بداية التشغيل
-function loadFromLocalStorage() {
-  const dataEntries = localStorage.getItem("entries");
-  const dataUsers = localStorage.getItem("users");
-  const dataAnimalCuts = localStorage.getItem("animalCuts");
+      <label>تاريخ الإنتاج:</label>
+      <input type="date" id="productionDate" class="form-control">
 
-  if (dataEntries) entries = JSON.parse(dataEntries);
-  if (dataUsers) users = JSON.parse(dataUsers);
-  if (dataAnimalCuts) animalCuts = JSON.parse(dataAnimalCuts);
-}
+      <label>تاريخ الانتهاء:</label>
+      <input type="date" id="expiryDate" class="form-control">
 
-function saveToLocalStorage() {
-  localStorage.setItem("entries", JSON.stringify(entries));
-  localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("animalCuts", JSON.stringify(animalCuts));
-}
+      <button type="button" class="btn btn-primary mt-3" onclick="printCard()">طباعة الاستيكر</button>
+    </form>
 
-window.addEventListener("DOMContentLoaded", () => {
-  loadFromLocalStorage();
-});
+    <div class="card-preview" id="card">
+      <div class="card-header">مسـلخ مدينة غياثي</div>
+      <div class="card-content">
+        <div class="info-container">
+          <div class="info-block">
+            <div class="info-title">نوع الذبيحة</div>
+            <div class="info-value" id="cAnimal"></div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">نوع التقطيع</div>
+            <div class="info-value" id="cCut"></div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">تاريخ الإنتاج</div>
+            <div class="info-value" id="cProd"></div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">تاريخ الانتهاء</div>
+            <div class="info-value" id="cExp"></div>
+          </div>
+        </div>
+        <div class="big-number" id="cSticker">1</div>
+      </div>
+    </div>
+    <button class="btn btn-outline-dark btn-back no-print" onclick="goToScreen('dashboard')">رجوع</button>
+  </div>
 
-// --- التنقل بين الشاشات ---
-function goToScreen(screenId) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(screenId).classList.add("active");
+  <script>
+    // تعريف بيانات المستخدمين
+    let users = [
+      { name: "أحمد", id: "1234", role: "مدخل بيانات" },
+      { name: "مصعب محمد", id: "70062", role: "مشرف" },
+    ];
 
-  if (screenId === "entryScreen") {
-    populateEntryDropdowns();
-    clearEntryForm();
-  }
-  if (screenId === "userSettings") {
-    renderUsersTable();
-    renderAnimalCutsTable();
-  }
-  if (screenId === "clientsReportScreen") {
-    renderClientsReportTable();
-  }
-  if (screenId === "invoicesScreen") {
-    renderInvoicesTable();
-  }
-}
+    // أنواع الذبائح والتقطيع
+    let animalCuts = [
+      { animal: "خروف", cut: "صحن", price: 150 },
+      { animal: "ماعز", cut: "نص", price: 100 },
+    ];
 
-// --- تسجيل الدخول ---
-function login() {
-  const empID = document.getElementById("empID").value.trim();
-  const user = users.find(u => u.id === empID);
-  if (user) {
-    currentUser = user;
-    goToScreen("dashboard");
-    document.getElementById("loginError").style.display = "none";
-  } else {
-    document.getElementById("loginError").style.display = "block";
-  }
-}
+    // الإدخالات المحفوظة
+    let entries = [];
+    let currentUser = null;
+    let stickerCounter = 1;
 
-// تسجيل خروج
-function logout() {
-  currentUser = null;
-  goToScreen("welcomeScreen");
-}
+    // تحميل البيانات من localStorage عند بداية التشغيل
+    function loadFromLocalStorage() {
+      const dataEntries = localStorage.getItem("entries");
+      const dataUsers = localStorage.getItem("users");
+      const dataAnimalCuts = localStorage.getItem("animalCuts");
+      const lastSticker = localStorage.getItem("lastSticker");
 
-// --- إدارة المستخدمين ---
-function addUser(event) {
-  event.preventDefault();
-  const name = document.getElementById("userName").value.trim();
-  const id = document.getElementById("userID").value.trim();
-  const role = document.getElementById("userRole").value;
+      if (dataEntries) entries = JSON.parse(dataEntries);
+      if (dataUsers) users = JSON.parse(dataUsers);
+      if (dataAnimalCuts) animalCuts = JSON.parse(dataAnimalCuts);
+      if (lastSticker) stickerCounter = parseInt(lastSticker) + 1;
+    }
 
-  if (!name || !id || !role) {
-    alert("يرجى ملء جميع الحقول");
-    return;
-  }
+    function saveToLocalStorage() {
+      localStorage.setItem("entries", JSON.stringify(entries));
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("animalCuts", JSON.stringify(animalCuts));
+      localStorage.setItem("lastSticker", stickerCounter);
+    }
 
-  if (users.some(u => u.id === id)) {
-    alert("الرقم الوظيفي موجود مسبقاً");
-    return;
-  }
+    window.addEventListener("DOMContentLoaded", () => {
+      loadFromLocalStorage();
+      populateEntryDropdowns();
+      document.getElementById("entryDate").valueAsDate = new Date();
+      document.getElementById("invoiceNumber").value = generateInvoiceNumber();
+      document.getElementById("productionDate").valueAsDate = new Date();
+      
+      // Set expiry date to 3 days from now
+      const expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + 3);
+      document.getElementById("expiryDate").valueAsDate = expiryDate;
+    });
 
-  users.push({ name, id, role });
-  saveToLocalStorage();
-  renderUsersTable();
+    // --- التنقل بين الشاشات ---
+    function goToScreen(screenId) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(screenId).classList.add("active");
 
-  document.getElementById("userName").value = "";
-  document.getElementById("userID").value = "";
-  document.getElementById("userRole").value = "";
-}
+      if (screenId === "entryScreen") {
+        populateEntryDropdowns();
+        clearEntryForm();
+      }
+      if (screenId === "userSettings") {
+        renderUsersTable();
+        renderAnimalCutsTable();
+      }
+      if (screenId === "clientsReportScreen") {
+        renderClientsReportTable();
+      }
+      if (screenId === "invoicesScreen") {
+        renderInvoicesTable();
+      }
+    }
 
-function renderUsersTable() {
-  const tbody = document.querySelector("#usersTable tbody");
-  tbody.innerHTML = "";
-  users.forEach((u, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${u.name}</td>
-      <td>${u.id}</td>
-      <td>${u.role}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${i})">حذف</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+    // --- تسجيل الدخول ---
+    function login() {
+      const empID = document.getElementById("empID").value.trim();
+      const user = users.find(u => u.id === empID);
+      if (user) {
+        currentUser = user;
+        goToScreen("dashboard");
+        document.getElementById("loginError").style.display = "none";
+      } else {
+        document.getElementById("loginError").style.display = "block";
+      }
+    }
 
-function deleteUser(index) {
-  if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
-    users.splice(index, 1);
-    saveToLocalStorage();
-    renderUsersTable();
-  }
-}
+    // تسجيل خروج
+    function logout() {
+      currentUser = null;
+      goToScreen("welcomeScreen");
+    }
 
-// --- إدارة أنواع الذبائح ---
-function addAnimalCut(event) {
-  event.preventDefault();
-  const animal = document.getElementById("animalType").value.trim();
-  const cut = document.getElementById("cutType").value.trim();
-  const price = Number(document.getElementById("animalPrice").value);
+    // --- إدارة المستخدمين ---
+    function addUser() {
+      const name = document.getElementById("userName").value.trim();
+      const id = document.getElementById("userID").value.trim();
+      const role = document.getElementById("userRole").value;
 
-  if (!animal || !cut || isNaN(price) || price <= 0) {
-    alert("يرجى ملء جميع الحقول بشكل صحيح");
-    return;
-  }
+      if (!name || !id || !role) {
+        alert("يرجى ملء جميع الحقول");
+        return;
+      }
 
-  if (animalCuts.some(ac => ac.animal === animal && ac.cut === cut)) {
-    alert("نوع الذبيحة مع التقطيع موجود مسبقاً");
-    return;
-  }
+      if (users.some(u => u.id === id)) {
+        alert("الرقم الوظيفي موجود مسبقاً");
+        return;
+      }
 
-  animalCuts.push({ animal, cut, price });
-  saveToLocalStorage();
-  renderAnimalCutsTable();
+      users.push({ name, id, role });
+      saveToLocalStorage();
+      renderUsersTable();
 
-  document.getElementById("animalType").value = "";
-  document.getElementById("cutType").value = "";
-  document.getElementById("animalPrice").value = "";
-}
+      document.getElementById("userName").value = "";
+      document.getElementById("userID").value = "";
+      document.getElementById("userRole").value = "";
+    }
 
-function renderAnimalCutsTable() {
-  const tbody = document.querySelector("#animalCutsTable tbody");
-  tbody.innerHTML = "";
-  animalCuts.forEach((ac, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${ac.animal}</td>
-      <td>${ac.cut}</td>
-      <td>${ac.price}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteAnimalCut(${i})">حذف</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+    function renderUsersTable() {
+      const tbody = document.querySelector("#usersTable tbody");
+      tbody.innerHTML = "";
+      users.forEach((u, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${u.name}</td>
+          <td>${u.id}</td>
+          <td>${u.role}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${i})">حذف</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-function deleteAnimalCut(index) {
-  if (confirm("هل أنت متأكد من حذف نوع الذبيحة؟")) {
-    animalCuts.splice(index, 1);
-    saveToLocalStorage();
-    renderAnimalCutsTable();
-  }
-}
+    function deleteUser(index) {
+      if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
+        users.splice(index, 1);
+        saveToLocalStorage();
+        renderUsersTable();
+      }
+    }
 
-// --- تعبئة قوائم الإدخال ---
-function populateEntryDropdowns() {
-  const animalTypeEntry = document.getElementById("animalTypeEntry");
-  const cutTypeEntry = document.getElementById("cutTypeEntry");
-  const slaughterID = document.getElementById("slaughterID");
-  const stickerID = document.getElementById("stickerID");
+    // --- إدارة أنواع الذبائح ---
+    function addAnimalCut() {
+      const animal = document.getElementById("animalType").value.trim();
+      const cut = document.getElementById("cutType").value.trim();
+      const price = Number(document.getElementById("animalPrice").value);
 
-  animalTypeEntry.innerHTML = "";
-  cutTypeEntry.innerHTML = "";
-  slaughterID.innerHTML = "";
-  stickerID.innerHTML = "";
+      if (!animal || !cut || isNaN(price) || price <= 0) {
+        alert("يرجى ملء جميع الحقول بشكل صحيح");
+        return;
+      }
 
-  // حصر أنواع الذبائح (بدون تكرار)
-  const uniqueAnimals = [...new Set(animalCuts.map(ac => ac.animal))];
-  uniqueAnimals.forEach(animal => {
-    const option = document.createElement("option");
-    option.value = animal;
-    option.textContent = animal;
-    animalTypeEntry.appendChild(option);
-  });
+      if (animalCuts.some(ac => ac.animal === animal && ac.cut === cut)) {
+        alert("نوع الذبيحة مع التقطيع موجود مسبقاً");
+        return;
+      }
 
-  for (let i = 1; i <= 1000; i++) {
-    const optSlaughter = document.createElement("option");
-    optSlaughter.value = i;
-    optSlaughter.textContent = i;
-    slaughterID.appendChild(optSlaughter);
+      animalCuts.push({ animal, cut, price });
+      saveToLocalStorage();
+      renderAnimalCutsTable();
 
-    const optSticker = document.createElement("option");
-    optSticker.value = i;
-    optSticker.textContent = i;
-    stickerID.appendChild(optSticker);
-  }
+      document.getElementById("animalType").value = "";
+      document.getElementById("cutType").value = "";
+      document.getElementById("animalPrice").value = "";
+    }
 
-  animalTypeEntry.addEventListener("change", () => {
-    updateCutTypes(animalTypeEntry.value);
-  });
+    function renderAnimalCutsTable() {
+      const tbody = document.querySelector("#animalCutsTable tbody");
+      tbody.innerHTML = "";
+      animalCuts.forEach((ac, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${ac.animal}</td>
+          <td>${ac.cut}</td>
+          <td>${ac.price}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="deleteAnimalCut(${i})">حذف</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-  if (animalTypeEntry.value) {
-    updateCutTypes(animalTypeEntry.value);
-  }
-}
+    function deleteAnimalCut(index) {
+      if (confirm("هل أنت متأكد من حذف نوع الذبيحة؟")) {
+        animalCuts.splice(index, 1);
+        saveToLocalStorage();
+        renderAnimalCutsTable();
+      }
+    }
 
-function updateCutTypes(animal) {
-  const cutTypeEntry = document.getElementById("cutTypeEntry");
-  cutTypeEntry.innerHTML = "";
-  const cutsForAnimal = animalCuts.filter(ac => ac.animal === animal);
-  cutsForAnimal.forEach(cutObj => {
-    const option = document.createElement("option");
-    option.value = cutObj.cut;
-    option.textContent = cutObj.cut;
-    cutTypeEntry.appendChild(option);
-  });
+    // --- تعبئة قوائم الإدخال ---
+    function populateEntryDropdowns() {
+      const animalTypeEntry = document.getElementById("animalTypeEntry");
+      const cutTypeEntry = document.getElementById("cutTypeEntry");
+      const slaughterID = document.getElementById("slaughterID");
+      const stickerID = document.getElementById("stickerID");
 
-  if (cutsForAnimal.length > 0) {
-    document.getElementById("unitPriceEntry").value = cutsForAnimal[0].price;
-    updateTotalPrice();
-  } else {
-    document.getElementById("unitPriceEntry").value = "";
-    document.getElementById("totalPriceEntry").value = "";
-  }
-}
+      animalTypeEntry.innerHTML = "";
+      cutTypeEntry.innerHTML = "";
+      slaughterID.innerHTML = "";
+      stickerID.innerHTML = "";
 
-document.getElementById("cutTypeEntry").addEventListener("change", () => {
-  const animal = document.getElementById("animalTypeEntry").value;
-  const cut = document.getElementById("cutTypeEntry").value;
-  const found = animalCuts.find(ac => ac.animal === animal && ac.cut === cut);
-  if (found) {
-    document.getElementById("unitPriceEntry").value = found.price;
-    updateTotalPrice();
-  }
-});
+      // حصر أنواع الذبائح (بدون تكرار)
+      const uniqueAnimals = [...new Set(animalCuts.map(ac => ac.animal))];
+      uniqueAnimals.forEach(animal => {
+        const option = document.createElement("option");
+        option.value = animal;
+        option.textContent = animal;
+        animalTypeEntry.appendChild(option);
+      });
 
-document.getElementById("quantity").addEventListener("input", updateTotalPrice);
+      for (let i = 1; i <= 1000; i++) {
+        const optSlaughter = document.createElement("option");
+        optSlaughter.value = i;
+        optSlaughter.textContent = i;
+        slaughterID.appendChild(optSlaughter);
 
-function updateTotalPrice() {
-  const quantity = Number(document.getElementById("quantity").value);
-  const unitPrice = Number(document.getElementById("unitPriceEntry").value);
-  if (!isNaN(quantity) && !isNaN(unitPrice)) {
-    document.getElementById("totalPriceEntry").value = (quantity * unitPrice).toFixed(2);
-  } else {
-    document.getElementById("totalPriceEntry").value = "";
-  }
-}
+        const optSticker = document.createElement("option");
+        optSticker.value = i;
+        optSticker.textContent = i;
+        stickerID.appendChild(optSticker);
+      }
 
-// --- إضافة إدخال ---
-function addEntry(event) {
-  event.preventDefault();
-  const entry = {
-    date: document.getElementById("entryDate").value,
-    invoiceNumber: document.getElementById("invoiceNumber").value || generateInvoiceNumber(),
-    clientName: document.getElementById("clientName").value.trim(),
-    clientPhone: document.getElementById("clientPhone").value.trim(),
-    slaughterID: document.getElementById("slaughterID").value,
-    stickerID: document.getElementById("stickerID").value,
-    animalType: document.getElementById("animalTypeEntry").value,
-    cutType: document.getElementById("cutTypeEntry").value,
-    quantity: Number(document.getElementById("quantity").value),
-    unitPrice: Number(document.getElementById("unitPriceEntry").value),
-    totalPrice: Number(document.getElementById("totalPriceEntry").value),
-    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value || '',
-    addons: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
-  };
+      animalTypeEntry.addEventListener("change", () => {
+        updateCutTypes(animalTypeEntry.value);
+      });
 
-  if (!entry.clientName || !entry.clientPhone || !entry.animalType || !entry.cutType || entry.quantity <= 0) {
-    alert("يرجى ملء جميع الحقول المطلوبة بشكل صحيح");
-    return;
-  }
+      if (animalTypeEntry.value) {
+        updateCutTypes(animalTypeEntry.value);
+      }
+    }
 
-  entries.push(entry);
-  saveToLocalStorage();
-  alert("تمت الإضافة");
-  clearEntryForm();
+    function updateCutTypes(animal) {
+      const cutTypeEntry = document.getElementById("cutTypeEntry");
+      cutTypeEntry.innerHTML = "";
+      const cutsForAnimal = animalCuts.filter(ac => ac.animal === animal);
+      cutsForAnimal.forEach(cutObj => {
+        const option = document.createElement("option");
+        option.value = cutObj.cut;
+        option.textContent = cutObj.cut;
+        cutTypeEntry.appendChild(option);
+      });
 
-  // لا ننتقل إلى شاشة الداشبورد
-  // goToScreen("dashboard");
-}
+      if (cutsForAnimal.length > 0) {
+        document.getElementById("unitPriceEntry").value = cutsForAnimal[0].price;
+        updateTotalPrice();
+      } else {
+        document.getElementById("unitPriceEntry").value = "";
+        document.getElementById("totalPriceEntry").value = "";
+      }
+    }
 
+    document.getElementById("cutTypeEntry").addEventListener("change", () => {
+      const animal = document.getElementById("animalTypeEntry").value;
+      const cut = document.getElementById("cutTypeEntry").value;
+      const found = animalCuts.find(ac => ac.animal === animal && ac.cut === cut);
+      if (found) {
+        document.getElementById("unitPriceEntry").value = found.price;
+        updateTotalPrice();
+      }
+    });
 
+    document.getElementById("quantity").addEventListener("input", updateTotalPrice);
 
-function clearEntryForm() {
-  document.getElementById("entryForm").reset();
-  document.getElementById("entryDate").valueAsDate = new Date();
-  document.getElementById("invoiceNumber").value = generateInvoiceNumber();
-  updateTotalPrice();
-}
+    function updateTotalPrice() {
+      const quantity = Number(document.getElementById("quantity").value);
+      const unitPrice = Number(document.getElementById("unitPriceEntry").value);
+      if (!isNaN(quantity) && !isNaN(unitPrice)) {
+        document.getElementById("totalPriceEntry").value = (quantity * unitPrice).toFixed(2);
+      } else {
+        document.getElementById("totalPriceEntry").value = "";
+      }
+    }
 
-function generateInvoiceNumber() {
-  let lastNumber = localStorage.getItem('lastInvoiceNumber');
-  if (!lastNumber) lastNumber = 1000;
-  else lastNumber = Number(lastNumber) + 1;
-  localStorage.setItem('lastInvoiceNumber', lastNumber);
-  return "GHSH" + lastNumber;
-}
+    // --- إضافة إدخال ---
+    function addEntry() {
+      const entry = {
+        date: document.getElementById("entryDate").value,
+        invoiceNumber: document.getElementById("invoiceNumber").value || generateInvoiceNumber(),
+        clientName: document.getElementById("clientName").value.trim(),
+        clientPhone: document.getElementById("clientPhone").value.trim(),
+        slaughterID: document.getElementById("slaughterID").value,
+        stickerID: document.getElementById("stickerID").value,
+        animalType: document.getElementById("animalTypeEntry").value,
+        cutType: document.getElementById("cutTypeEntry").value,
+        quantity: Number(document.getElementById("quantity").value),
+        unitPrice: Number(document.getElementById("unitPriceEntry").value),
+        totalPrice: Number(document.getElementById("totalPriceEntry").value),
+        paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value || '',
+        addons: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
+      };
 
-// --- عرض تقارير ---
-function renderClientsReportTable() {
-  const tbody = document.querySelector("#clientsReportTable tbody");
-  tbody.innerHTML = "";
-  entries.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.clientPhone}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+      if (!entry.clientName || !entry.clientPhone || !entry.animalType || !entry.cutType || entry.quantity <= 0) {
+        alert("يرجى ملء جميع الحقول المطلوبة بشكل صحيح");
+        return;
+      }
 
-function renderInvoicesTable() {
-  const tbody = document.querySelector("#invoicesTable tbody");
-  tbody.innerHTML = "";
-  entries.forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.invoiceNumber}</td>
-      <td>${e.date}</td>
-      <td>${e.clientName}</td>
-      <td>${e.quantity}</td>
-      <td>${e.totalPrice.toFixed(2)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+      entries.push(entry);
+      saveToLocalStorage();
+      alert("تمت الإضافة بنجاح");
+      clearEntryForm();
+    }
 
-// --- طباعة الاستيكر ---
-function printSticker() {
-  const stickerPreview = document.getElementById("stickerPreview");
-  if (entries.length === 0) return alert("لا توجد بيانات");
-  const lastEntry = entries[entries.length - 1];
-  stickerPreview.innerHTML = `
-    <div>نوع الذبيحة: ${lastEntry.animalType}</div>
-    <div>نوع التقطيع: ${lastEntry.cutType}</div>
-    <div>الكمية: ${lastEntry.quantity}</div>
-    <div>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</div>
-    <div>الاستيكر رقم: ${lastEntry.stickerID}</div>
-  `;
-  window.print();
-}
+    function clearEntryForm() {
+      document.getElementById("entryForm").reset();
+      document.getElementById("entryDate").valueAsDate = new Date();
+      document.getElementById("invoiceNumber").value = generateInvoiceNumber();
+      updateTotalPrice();
+    }
 
-// --- طباعة الفاتورة ---
-function printInvoice() {
-  if (entries.length === 0) return alert("لا توجد بيانات للطباعة");
-  const lastEntry = entries[entries.length - 1];
-  const w = window.open("", "Invoice", "width=600,height=400");
-  w.document.write(`
-    <html dir="rtl"><head><title>فاتورة</title></head><body>
-    <h3>فاتورة شراء</h3>
-    <p>رقم الفاتورة: ${lastEntry.invoiceNumber}</p>
-    <p>التاريخ: ${lastEntry.date}</p>
-    <p>اسم المتعامل: ${lastEntry.clientName}</p>
-    <p>عدد الذبائح: ${lastEntry.quantity}</p>
-    <p>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</p>
-    </body></html>
-  `);
-  w.document.close();
-  w.print();
-}
+    function generateInvoiceNumber() {
+      let lastNumber = localStorage.getItem('lastInvoiceNumber');
+      if (!lastNumber) lastNumber = 1000;
+      else lastNumber = Number(lastNumber) + 1;
+      localStorage.setItem('lastInvoiceNumber', lastNumber);
+      return "GHSH" + lastNumber;
+    }
 
-</script>
+    // --- عرض تقارير ---
+    function renderClientsReportTable() {
+      const tbody = document.querySelector("#clientsReportTable tbody");
+      tbody.innerHTML = "";
+      entries.forEach(e => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${e.date}</td>
+          <td>${e.clientName}</td>
+          <td>${e.clientPhone}</td>
+          <td>${e.quantity}</td>
+          <td>${e.totalPrice.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterClientsReport() {
+      const fromDate = document.getElementById("filterDateFrom").value;
+      const toDate = document.getElementById("filterDateTo").value;
+      
+      let filteredEntries = entries;
+      
+      if (fromDate) {
+        filteredEntries = filteredEntries.filter(e => e.date >= fromDate);
+      }
+      
+      if (toDate) {
+        filteredEntries = filteredEntries.filter(e => e.date <= toDate);
+      }
+      
+      const tbody = document.querySelector("#clientsReportTable tbody");
+      tbody.innerHTML = "";
+      filteredEntries.forEach(e => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${e.date}</td>
+          <td>${e.clientName}</td>
+          <td>${e.clientPhone}</td>
+          <td>${e.quantity}</td>
+          <td>${e.totalPrice.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderInvoicesTable() {
+      const tbody = document.querySelector("#invoicesTable tbody");
+      tbody.innerHTML = "";
+      entries.forEach(e => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${e.invoiceNumber}</td>
+          <td>${e.date}</td>
+          <td>${e.clientName}</td>
+          <td>${e.totalPrice.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterInvoices() {
+      const fromDate = document.getElementById("invoiceDateFrom").value;
+      const toDate = document.getElementById("invoiceDateTo").value;
+      
+      let filteredEntries = entries;
+      
+      if (fromDate) {
+        filteredEntries = filteredEntries.filter(e => e.date >= fromDate);
+      }
+      
+      if (toDate) {
+        filteredEntries = filteredEntries.filter(e => e.date <= toDate);
+      }
+      
+      const tbody = document.querySelector("#invoicesTable tbody");
+      tbody.innerHTML = "";
+      filteredEntries.forEach(e => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${e.invoiceNumber}</td>
+          <td>${e.date}</td>
+          <td>${e.clientName}</td>
+          <td>${e.totalPrice.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterStatistics() {
+      const fromDate = document.getElementById("statsDateFrom").value;
+      const toDate = document.getElementById("statsDateTo").value;
+      
+      let filteredEntries = entries;
+      
+      if (fromDate) {
+        filteredEntries = filteredEntries.filter(e => e.date >= fromDate);
+      }
+      
+      if (toDate) {
+        filteredEntries = filteredEntries.filter(e => e.date <= toDate);
+      }
+      
+      const statsResult = document.getElementById("statsResult");
+      
+      if (filteredEntries.length === 0) {
+        statsResult.innerHTML = "<p>لا توجد بيانات في الفترة المحددة</p>";
+        return;
+      }
+      
+      // حساب الإحصائيات
+      const totalQuantity = filteredEntries.reduce((sum, e) => sum + e.quantity, 0);
+      const totalAmount = filteredEntries.reduce((sum, e) => sum + e.totalPrice, 0);
+      const avgPerEntry = totalAmount / filteredEntries.length;
+      
+      // تجميع حسب نوع الذبيحة
+      const byAnimal = {};
+      filteredEntries.forEach(e => {
+        if (!byAnimal[e.animalType]) {
+          byAnimal[e.animalType] = { quantity: 0, amount: 0 };
+        }
+        byAnimal[e.animalType].quantity += e.quantity;
+        byAnimal[e.animalType].amount += e.totalPrice;
+      });
+      
+      // بناء HTML للنتائج
+      let html = `
+        <div class="card p-3">
+          <h5>ملخص إحصائي</h5>
+          <p>عدد الذبائح: ${totalQuantity}</p>
+          <p>إجمالي المبيعات: ${totalAmount.toFixed(2)} ريال</p>
+          <p>متوسط الفاتورة: ${avgPerEntry.toFixed(2)} ريال</p>
+          
+          <h5 class="mt-3">حسب نوع الذبيحة</h5>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>نوع الذبيحة</th>
+                <th>الكمية</th>
+                <th>القيمة</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      for (const animal in byAnimal) {
+        html += `
+          <tr>
+            <td>${animal}</td>
+            <td>${byAnimal[animal].quantity}</td>
+            <td>${byAnimal[animal].amount.toFixed(2)} ريال</td>
+          </tr>
+        `;
+      }
+      
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+      
+      statsResult.innerHTML = html;
+    }
+
+    // --- طباعة الاستيكر ---
+    function printSticker() {
+      const stickerPreview = document.getElementById("stickerPrintArea");
+      if (entries.length === 0) {
+        alert("لا توجد بيانات متاحة للطباعة");
+        return;
+      }
+      
+      const lastEntry = entries[entries.length - 1];
+      stickerPreview.innerHTML = `
+        <div>مسلخ مدينة غياثي</div>
+        <div>---------------------</div>
+        <div>نوع الذبيحة: ${lastEntry.animalType}</div>
+        <div>نوع التقطيع: ${lastEntry.cutType}</div>
+        <div>الكمية: ${lastEntry.quantity}</div>
+        <div>المجموع: ${lastEntry.totalPrice.toFixed(2)} ريال</div>
+        <div>رقم الاستيكر: ${lastEntry.stickerID}</div>
+        <div>التاريخ: ${lastEntry.date}</div>
+      `;
+      
+      // حفظ رقم الاستيكر الأخير
+      stickerCounter = parseInt(lastEntry.stickerID) + 1;
+      localStorage.setItem("lastSticker", lastEntry.stickerID);
+      
+      window.print();
+    }
+
+    // --- طباعة الفاتورة ---
+    function printInvoice() {
+      if (entries.length === 0) {
+        alert("لا توجد بيانات متاحة للطباعة");
+        return;
+      }
+      
+      const lastEntry = entries[entries.length - 1];
+      const w = window.open("", "Invoice", "width=600,height=400");
+      w.document.write(`
+        <html dir="rtl">
+          <head>
+            <title>فاتورة ${lastEntry.invoiceNumber}</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              h3 { text-align: center; }
+              table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+              th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+              th { background-color: #f2f2f2; }
+              .total { font-weight: bold; font-size: 1.2em; }
+            </style>
+          </head>
+          <body>
+            <h3>فاتورة ذبح بالمسلخ </h3>
+            <p><strong>رقم الفاتورة:</strong> ${lastEntry.invoiceNumber}</p>
+            <p><strong>التاريخ:</strong> ${lastEntry.date}</p>
+            <p><strong>اسم المتعامل:</strong> ${lastEntry.clientName}</p>
+            <p><strong>هاتف المتعامل:</strong> ${lastEntry.clientPhone}</p>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>نوع الذبيحة</th>
+                  <th>نوع التقطيع</th>
+                  <th>الكمية</th>
+                  <th>سعر الوحدة</th>
+                  <th>الإجمالي</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${lastEntry.animalType}</td>
+                  <td>${lastEntry.cutType}</td>
+                  <td>${lastEntry.quantity}</td>
+                  <td>${lastEntry.unitPrice.toFixed(2)}</td>
+                  <td>${lastEntry.totalPrice.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+            
+             
+            <p><strong>طريقة الدفع:</strong> ${lastEntry.paymentMethod}</p>
+            ${lastEntry.addons.length > 0 ? 
+              `<p><strong>الملحقات:</strong> ${lastEntry.addons.join("، ")}</p>` : ''}
+          </body>
+        </html>
+      `);
+      w.document.close();
+      w.print();
+    }
+
+    // --- طباعة البطاقة ---
+    function printCard() {
+      // توليد البطاقة تلقائيًا
+      document.getElementById("cAnimal").innerText = document.getElementById("animalTypeCard").value;
+      document.getElementById("cCut").innerText = document.getElementById("cutTypeCard").value;
+      document.getElementById("cProd").innerText = document.getElementById("productionDate").value;
+      document.getElementById("cExp").innerText = document.getElementById("expiryDate").value;
+      document.getElementById("cSticker").innerText = stickerCounter;
+      
+      // حفظ رقم الاستيكر الأخير
+      localStorage.setItem("lastSticker", stickerCounter);
+      stickerCounter++;
+      
+      // مباشرة يفتح نافذة الطباعة
+      window.print();
+    }
+  </script>
 </body>
-
 </html>
