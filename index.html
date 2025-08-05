@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
     body {
-      background: #f8f9fa;
       font-family: 'Tahoma', sans-serif;
+      background: #f8f9fa;
     }
     .screen {
       display: none;
@@ -33,6 +33,8 @@
       font-size: 1.1em;
       text-align: center;
     }
+    
+    /* تنسيقات بطاقة الاستيكر */
     .card-preview {
       width: 9.701in;
       height: 1.907in;
@@ -92,12 +94,17 @@
     .info-title {
       background: #f0f0f0;
     }
+    
+    /* تنسيقات الطباعة */
     @media print {
       .no-print {
         display: none !important;
       }
       body {
         background: white;
+      }
+      form {
+        display: none;
       }
     }
   </style>
@@ -151,7 +158,7 @@
         <button class="btn btn-success w-100" onclick="goToScreen('statisticsScreen')">التقرير الإحصائي</button>
       </div>
       <div class="col-md-4">
-        <button class="btn btn-danger w-100" onclick="goToScreen('stickerScreen')">طباعة الاستيكر</button>
+        <button class="btn btn-danger w-100" onclick="goToScreen('cardScreen')">طباعة الاستيكر</button>
       </div>
     </div>
     <button class="btn btn-outline-dark btn-back mt-4" onclick="logout()">تسجيل خروج</button>
