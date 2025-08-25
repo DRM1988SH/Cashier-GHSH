@@ -83,13 +83,13 @@
             
             /* طباعة الفاتورة - المحتوى فقط - أبعاد معدلة لطابعة Epson-TM-70II */
             .invoice-print {
-                width: 8cm; /* عرض الفاتورة للطابعة Epson-TM-70II */
-                height: auto;
-                max-height: 5cm; /* تحديد ارتفاع أقصى للفاتورة */
+                width: 10cm; /* عرض الفاتورة للطابعة Epson-TM-70II */
+                height: 20cm;
+                max-height: 10cm; /* تحديد ارتفاع أقصى للفاتورة */
                 padding: 0.2cm;
-                border: 2.5pt;
+                border: 2.0pt;
                 margin: 0;
-                font-size: 12px; /* تصغير الخط للفاتورة */
+                font-size: 18px; /* تصغير الخط للفاتورة */
                 page-break-after: avoid;
                 page-break-inside: avoid;
                 overflow: hidden;
@@ -97,13 +97,13 @@
             
             .invoice-print table {
                 width: 100%;
-                font-size: 10px; /* تصغير خط الجدول */
+                font-size: 18px; /* تصغير خط الجدول */
             }
             
             .invoice-print td, 
             .invoice-print th {
                 padding: 2px; /* تصغير الحشوة */
-                border: 1px solid #000 !important; /* تصغير الحدود */
+                border: 2px solid #000 !important; /* تصغير الحدود */
             }
             
             /* منع ظهور أي شيء آخر غير المحتوى المطلوب */
@@ -383,7 +383,7 @@
         }
 
         .fc-img {
-            width: 2.5cm;
+            width: 2.1cm;
             height: 2.0cm;
             max-height: 2.0cm; /* تصغير الارتفاع الأقصى */
             object-fit: contain;
