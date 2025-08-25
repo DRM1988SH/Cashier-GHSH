@@ -221,8 +221,8 @@
         /* بطاقة غذائية - أبعاد معدلة لطابعة Zebra ZT-230 */
         .foodcard {
             position: relative;
-            width: 9.701cm; /* عرض الورقة للطابعة Zebra ZT-230 */
-            height: 1.907cm; /* ارتفاع الورقة للطابعة Zebra ZT-230 */
+            width: 24.00cm; /* عرض الورقة للطابعة Zebra ZT-230 */
+            height: 2.50cm; /* ارتفاع الورقة للطابعة Zebra ZT-230 */
             border: 0.5pt solid #000;
             padding: 0.05in;
             display: flex;
@@ -245,7 +245,7 @@
         }
 
         .fc-box {
-            border: 0.5pt solid #000;
+            border: 1.0pt solid #000;
             padding: 0.02in 0.01in; /* تصغير الحشوة */
             font-size: 7pt; /* تصغير الخط */
             display: flex;
@@ -280,7 +280,7 @@
 
         .fc-img {
             width: 100%;
-            height: auto;
+            height: 0.9cm;
             max-height: 0.4in; /* تصغير الارتفاع الأقصى */
             object-fit: contain;
         }
@@ -288,7 +288,7 @@
         .fc-slaughter-name {
             font-size: 6pt; /* تصغير الخط */
             text-align: center;
-            margin-top: 0.02in; /* تصغير الهامش */
+            margin-top: 0.08in; /* تصغير الهامش */
             font-weight: bold;
         }
 
@@ -429,18 +429,18 @@
             }
             
             @page {
-                size: A4 landscape;
+                size: labels landscape;
                 margin: 0.5cm;
             }
             
             /* تنسيق خاص للبطاقة الغذائية - أبعاد معدلة */
             .foodcard {
-                page-break-after: always;
+                page-break-after: Avoid;
                 margin: 0;
                 padding: 0.03in;
-                width: 9.701cm;
-                height: 1.907cm;
-                border: 2.5pt solid #000;
+                width: 23.50cm;
+                height: 2.10cm;
+                border: 1.5pt solid #000;
             }
             
             /* طباعة الفاتورة - المحتوى فقط - أبعاد معدلة لطابعة Epson-TM-70II */
@@ -448,7 +448,7 @@
                 width: 8cm; /* عرض الفاتورة للطابعة Epson-TM-70II */
                 height: auto;
                 padding: 0.2cm;
-                border: none;
+                border: 2.5pt;
                 margin: 0;
                 font-size: 12px; /* تصغير الخط للفاتورة */
             }
